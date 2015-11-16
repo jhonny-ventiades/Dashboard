@@ -1,0 +1,18 @@
+.black{color:  #000000}
+.white{color: #ffffff}
+.red-background{background-color: red}
+.yellow-background{background-color: #ffff00}
+.orange-background{background-color: orange}
+.significant{background-color: rgba(255, 163, 0, 0.40)
+}
+.green-background{background-color: green}
+.black-background{background-color:  #000000}
+.white-background{background-color: #ffffff}
+
+
+
+.paper{
+    border: 1px #e4e4e4 solid;
+    padding: 10px 10px 10px 10px;
+    box-shadow: 2px 2px 2px #999;
+}

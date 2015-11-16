@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html ng-app="dashboardApp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+        
+    <base href="/projects/Dashboard/">
+    <!--<base href="/">   -->
+
+    <link rel="stylesheet" type="text/css" href="client/bower_components/bootstrap/dist/css/bootstrap.css" />    
+    <link rel="stylesheet" type="text/css" href="client/css/main.css" media="all"/>
+
+    <script  src="client/bower_components/jquery/dist/jquery.min.js"></script>      
+    <script src="//www.parsecdn.com/js/parse-1.6.4.min.js"></script>
+    <script src="client/bower_components/angular/angular.js"></script>
+    <script src="client/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="client/bower_components/angular-route/angular-route.min.js"></script>
+    <script src="client/bower_components/angular-resource/angular-resource.min.js"></script>
+    <script src="client/js/app.js"></script>
+    <script src="client/js/controllers/mainCtrl.js"></script>
+    <script src="client/js/controllers/signInCtrl.js"></script>
+    <script src="client/js/controllers/companiesCtrl.js"></script>
+    <title>Dashboard</title>
+</head>
+<body ng-controller="mainCtrl">
+    <div ng-view=""></div>    
+</body>
+</html>

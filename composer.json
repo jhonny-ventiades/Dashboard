@@ -1,0 +1,12 @@
+{
+    "name": "jhonny/dashboard",
+    "require": {
+        "slim/slim": "2.*"
+    },
+    "authors": [
+        {
+            "name": "Jhonny Ventiades",
+            "email": "jhonny.ventiadesg@gmail.com"
+        }
+    ]
+}

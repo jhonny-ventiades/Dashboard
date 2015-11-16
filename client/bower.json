@@ -1,0 +1,16 @@
+{
+  "name": "watson",
+  "version": "0.0.0",
+  "authors": [
+    "Jhonny Ventiades <jhonny.ventiadesg@gmail.com>"
+  ],
+  "description": "dashboard_watson",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

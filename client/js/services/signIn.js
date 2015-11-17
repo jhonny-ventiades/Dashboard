@@ -1,3 +1,10 @@
+/**
+ * Angular Settings page services.
+ *
+ * User: Jhonny Ventiades<jhonny.ventiadesg@gmail.com>
+ * Date: 2015-11-17
+ */
+
 angular.module('dashboardApp')
     .factory('signIn', function ($q) {
         return {

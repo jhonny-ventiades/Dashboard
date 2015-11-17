@@ -7,7 +7,7 @@
 angular.module('dashboardApp')
     .controller('mainCtrl', function ($scope) {
        
-    Parse.initialize("0PFoPjr5G4LTn82O6Cz2EwwzBJhDtvJuCpQy6dd7", "jezYGz4N2YgwgauGxv5e8ptR8ckfqqAx3NpocYgC");
+    //Parse.initialize("SqdgGEaia8WDSLxPspQPQl9v6dfU8eSc2rSCNsrk", "bisf98c428qn3D8FUhE4gCqoFjApch8jqbE3iGRa");    
     
     
     });

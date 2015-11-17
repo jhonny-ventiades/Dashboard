@@ -16,4 +16,10 @@ angular.module('dashboardApp')
         $location.path("report");
     }
     
+    $scope.logout = function(){
+        Parse.User.logOut();
+        $location.path("");
+    }
+
+
     });

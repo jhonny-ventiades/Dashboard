@@ -26,284 +26,14 @@
 
 
 
-<div class="container">
+<div class="container" ng-init="loadRegionalManagersList()">
     <div class="row">        
-        <div class="col-sm-6 col-md-3 col-xs-12">
+        <div class="col-sm-6 col-md-3 col-xs-12" ng-repeat="manager in regionsManagers">
             <div class="panel panel-default" >
-                <div class="panel-heading">Company 5</div>
+                <div class="panel-heading">{{manager.region}}</div>
                 <div class="panel-body">
-                    Phone: +1000000<br>
-                    Address: Streetv43<br><br><br>
-                    <div class="col-xs-12 text-right">
-                       <a type="button" class="btn btn-success btn-sm" aria-label="Left Align" title="Manage users"
-                           href="users">
-                            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                       </a>
-                       <button type="button" class="btn btn-warning btn-sm" aria-label="Left Align" title="Get report"
-                           ng-click="showReport()">
-                            <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
-                       </button>
-                       <button type="button" class="btn btn-primary btn-sm" aria-label="Left Align" title="Edit company"
-                            data-toggle="modal" data-target="#EditCompany">
-                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                        </button>
-                        <button type="button" class="btn btn-danger btn-sm" aria-label="Left Align" title="Delete company"
-                           onclick="deleteCompany()">
-                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>       
-        <div class="col-sm-6 col-md-3 col-xs-12">
-            <div class="panel panel-default" >
-                <div class="panel-heading">Company 19</div>
-                <div class="panel-body">
-                    Phone: +1000000<br>
-                    Address: Streetv43<br><br><br>
-                    <div class="col-xs-12 text-right">
-                       <a type="button" class="btn btn-success btn-sm" aria-label="Left Align" title="Manage users"
-                           href="users">
-                            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                       </a>
-                       <button type="button" class="btn btn-warning btn-sm" aria-label="Left Align" title="Get report"
-                           ng-click="showReport()">
-                            <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
-                       </button>
-                       <button type="button" class="btn btn-primary btn-sm" aria-label="Left Align" title="Edit company"
-                            data-toggle="modal" data-target="#EditCompany">
-                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                        </button>
-                        <button type="button" class="btn btn-danger btn-sm" aria-label="Left Align" title="Delete company"
-                           onclick="deleteCompany()">
-                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>                       
-        <div class="col-sm-6 col-md-3 col-xs-12">
-            <div class="panel panel-default" >
-                <div class="panel-heading">Company 2</div>
-                <div class="panel-body">
-                    Phone: +1000000<br>
-                    Address: Streetv43<br><br><br>
-                    <div class="col-xs-12 text-right">
-                       <a type="button" class="btn btn-success btn-sm" aria-label="Left Align" title="Manage users"
-                           href="users">
-                            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                       </a>
-                       <button type="button" class="btn btn-warning btn-sm" aria-label="Left Align" title="Get report"
-                           ng-click="showReport()">
-                            <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
-                       </button>
-                       <button type="button" class="btn btn-primary btn-sm" aria-label="Left Align" title="Edit company"
-                            data-toggle="modal" data-target="#EditCompany">
-                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                        </button>
-                        <button type="button" class="btn btn-danger btn-sm" aria-label="Left Align" title="Delete company"
-                           onclick="deleteCompany()">
-                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6 col-md-3 col-xs-12">
-            <div class="panel panel-default" >
-                <div class="panel-heading">Company 4</div>
-                <div class="panel-body">
-                    Phone: +1000000<br>
-                    Address: Streetv43<br><br><br>
-                    <div class="col-xs-12 text-right">
-                       <a type="button" class="btn btn-success btn-sm" aria-label="Left Align" title="Manage users"
-                           href="users">
-                            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                       </a>
-                       <button type="button" class="btn btn-warning btn-sm" aria-label="Left Align" title="Get report"
-                           ng-click="showReport()">
-                            <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
-                       </button>
-                       <button type="button" class="btn btn-primary btn-sm" aria-label="Left Align" title="Edit company"
-                            data-toggle="modal" data-target="#EditCompany">
-                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                        </button>
-                        <button type="button" class="btn btn-danger btn-sm" aria-label="Left Align" title="Delete company"
-                           onclick="deleteCompany()">
-                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>       
-        <div class="col-sm-6 col-md-3 col-xs-12">
-            <div class="panel panel-default" >
-                <div class="panel-heading">Company 22</div>
-                <div class="panel-body">
-                    Phone: +1000000<br>
-                    Address: Streetv43<br><br><br>
-                    <div class="col-xs-12 text-right">
-                       <a type="button" class="btn btn-success btn-sm" aria-label="Left Align" title="Manage users"
-                           href="users">
-                            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                       </a>
-                       <button type="button" class="btn btn-warning btn-sm" aria-label="Left Align" title="Get report"
-                           ng-click="showReport()">
-                            <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
-                       </button>
-                       <button type="button" class="btn btn-primary btn-sm" aria-label="Left Align" title="Edit company"
-                            data-toggle="modal" data-target="#EditCompany">
-                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                        </button>
-                        <button type="button" class="btn btn-danger btn-sm" aria-label="Left Align" title="Delete company"
-                           onclick="deleteCompany()">
-                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>               
-        <div class="col-sm-6 col-md-3 col-xs-12">
-            <div class="panel panel-default" >
-                <div class="panel-heading">Company 1</div>
-                <div class="panel-body">
-                    Phone: +1000000<br>
-                    Address: Streetv43<br><br><br>
-                    <div class="col-xs-12 text-right">
-                       <a type="button" class="btn btn-success btn-sm" aria-label="Left Align" title="Manage users"
-                           href="users">
-                            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                       </a>
-                       <button type="button" class="btn btn-warning btn-sm" aria-label="Left Align" title="Get report"
-                           ng-click="showReport()">
-                            <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
-                       </button>
-                       <button type="button" class="btn btn-primary btn-sm" aria-label="Left Align" title="Edit company"
-                            data-toggle="modal" data-target="#EditCompany">
-                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                        </button>
-                        <button type="button" class="btn btn-danger btn-sm" aria-label="Left Align" title="Delete company"
-                           onclick="deleteCompany()">
-                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>       
-        <div class="col-sm-6 col-md-3 col-xs-12">
-            <div class="panel panel-default" >
-                <div class="panel-heading">Company 31</div>
-                <div class="panel-body">
-                    Phone: +1000000<br>
-                    Address: Streetv43<br><br><br>
-                    <div class="col-xs-12 text-right">
-                       <a type="button" class="btn btn-success btn-sm" aria-label="Left Align" title="Manage users"
-                           href="users">
-                            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                       </a>
-                       <button type="button" class="btn btn-warning btn-sm" aria-label="Left Align" title="Get report"
-                           ng-click="showReport()">
-                            <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
-                       </button>
-                       <button type="button" class="btn btn-primary btn-sm" aria-label="Left Align" title="Edit company"
-                            data-toggle="modal" data-target="#EditCompany">
-                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                        </button>
-                        <button type="button" class="btn btn-danger btn-sm" aria-label="Left Align" title="Delete company"
-                           onclick="deleteCompany()">
-                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>       
-        <div class="col-sm-6 col-md-3 col-xs-12">
-            <div class="panel panel-default" >
-                <div class="panel-heading">Company 23</div>
-                <div class="panel-body">
-                    Phone: +1000000<br>
-                    Address: Streetv43<br><br><br>
-                    <div class="col-xs-12 text-right">
-                       <a type="button" class="btn btn-success btn-sm" aria-label="Left Align" title="Manage users"
-                           href="users">
-                            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                       </a>
-                       <button type="button" class="btn btn-warning btn-sm" aria-label="Left Align" title="Get report"
-                           ng-click="showReport()">
-                            <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
-                       </button>
-                       <button type="button" class="btn btn-primary btn-sm" aria-label="Left Align" title="Edit company"
-                            data-toggle="modal" data-target="#EditCompany">
-                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                        </button>
-                        <button type="button" class="btn btn-danger btn-sm" aria-label="Left Align" title="Delete company"
-                           onclick="deleteCompany()">
-                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>       
-        <div class="col-sm-6 col-md-3 col-xs-12">
-            <div class="panel panel-default" >
-                <div class="panel-heading">Company 4</div>
-                <div class="panel-body">
-                    Phone: +1000000<br>
-                    Address: Streetv43<br><br><br>
-                    <div class="col-xs-12 text-right">
-                       <a type="button" class="btn btn-success btn-sm" aria-label="Left Align" title="Manage users"
-                           href="users">
-                            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                       </a>
-                       <button type="button" class="btn btn-warning btn-sm" aria-label="Left Align" title="Get report"
-                           ng-click="showReport()">
-                            <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
-                       </button>
-                       <button type="button" class="btn btn-primary btn-sm" aria-label="Left Align" title="Edit company"
-                            data-toggle="modal" data-target="#EditCompany">
-                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                        </button>
-                        <button type="button" class="btn btn-danger btn-sm" aria-label="Left Align" title="Delete company"
-                           onclick="deleteCompany()">
-                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>               
-        <div class="col-sm-6 col-md-3 col-xs-12">
-            <div class="panel panel-default" >
-                <div class="panel-heading">Company 7</div>
-                <div class="panel-body">
-                    Phone: +1000000<br>
-                    Address: Streetv43<br><br><br>
-                    <div class="col-xs-12 text-right">
-                       <a type="button" class="btn btn-success btn-sm" aria-label="Left Align" title="Manage users"
-                           href="users">
-                            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                       </a>
-                       <button type="button" class="btn btn-warning btn-sm" aria-label="Left Align" title="Get report"
-                           ng-click="showReport()">
-                            <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
-                       </button>
-                       <button type="button" class="btn btn-primary btn-sm" aria-label="Left Align" title="Edit company"
-                            data-toggle="modal" data-target="#EditCompany">
-                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                        </button>
-                        <button type="button" class="btn btn-danger btn-sm" aria-label="Left Align" title="Delete company"
-                           onclick="deleteCompany()">
-                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>       
-        <div class="col-sm-6 col-md-3 col-xs-12">
-            <div class="panel panel-default" >
-                <div class="panel-heading">Company 8</div>
-                <div class="panel-body">
-                    Phone: +1000000<br>
-                    Address: Streetv43<br><br><br>
+                    Phone: {{manager.phone}}<br>
+                    Address: {{manager.address}}<br><br><br>
                     <div class="col-xs-12 text-right">
                        <a type="button" class="btn btn-success btn-sm" aria-label="Left Align" title="Manage users"
                            href="users">
@@ -341,85 +71,61 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Create Company</h4>
+        <h4 class="modal-title" id="myModalLabel">Create Region Manager</h4>
       </div>
       <div class="modal-body">
         
-          <form>
+
+          <form name="managerForm" novalidate>
           <div class="form-group">
-            <label for="exampleInputEmail1">Name</label>
-            <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Name">
+            <label for="exampleInputEmail1">Email</label>
+            <input type="email" class="form-control"  placeholder="Email" ng-model="regionManager.username"  required>
           </div>
           <div class="form-group">
-            <label for="exampleInputPassword1">Phone</label>
-            <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Phone">
+            <label for="exampleInputPassword1">Password</label>
+            <input type="password" class="form-control" placeholder="Password" ng-model="regionManager.password"  required>
           </div>          
           <div class="form-group">
-            <label for="exampleInputPassword1">Address</label>
-            <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Address">
+            <label for="exampleInputPassword1">Verify password</label>
+            <input type="password" class="form-control" placeholder="Passsword" ng-model="regionManager.verify_password"  required>
+          </div>
+          <div class="alert alert-danger" role="alert" ng-if="regionManager.password != regionManager.verify_password">
+              <strong>Different passwords</strong>
+          </div>
+
+          <div class="form-group">
+            <label for="exampleInputEmail1">Region</label>
+            <input type="text" class="form-control" placeholder="Region" ng-model="regionManager.region" required>
+          </div>
+          <div class="alert alert-danger" role="alert" ng-if="errorSameRegion">
+            <strong>Error!</strong>, This Regions already exist.
+          </div>
+
+          <hr width="100%">
+          <div class="form-group">
+            <label for="exampleInputEmail1">Company Name</label>
+            <input type="text" class="form-control" placeholder="Company Name" ng-model="regionManager.company_name" required>
           </div>          
           <div class="form-group">
-            <label for="exampleInputPassword1">Description</label>
-              <textarea type="text" class="form-control" id="exampleInputPassword1" ></textarea>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Phone</label>
+            <input type="text" class="form-control" placeholder="Phone" ng-model="regionManager.phone" required>
+          </div>          
+          <div class="form-group">
+            <label for="exampleInputEmail1">Address</label>
+            <input type="text" class="form-control" placeholder="Address" ng-model="regionManager.address" required>
           </div>
         </form>
-          
-          
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+        <button type="button" class="btn btn-primary" ng-click="createRegionManager()"
+         ng-disabled="managerForm.$invalid">Create</button>
       </div>
     </div>
   </div>
 </div>
 
-
-
-
-
-
-
-
-
-<!-- Modal -->
-<div class="modal fade" id="EditCompany" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Create Company</h4>
-      </div>
-      <div class="modal-body">
-        
-          <form>
-          <div class="form-group">
-            <label for="exampleInputEmail1">Name</label>
-            <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Name" value="company name to edit">
-          </div>
-          <div class="form-group">
-            <label for="exampleInputPassword1">Phone</label>
-            <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Phone" value="+3242341">
-          </div>          
-          <div class="form-group">
-            <label for="exampleInputPassword1">Address</label>
-            <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Address" value="Address to edit">
-          </div>          
-          <div class="form-group">
-            <label for="exampleInputPassword1">Description</label>
-              <textarea type="text" class="form-control" id="exampleInputPassword1" >Description of the company</textarea>
-          </div>
-        </form>
-          
-          
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
 
 
 <script>

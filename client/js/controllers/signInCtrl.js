@@ -5,7 +5,7 @@
 'use strict';
 
 angular.module('dashboardApp')
-    .controller('signInCtrl', function ($scope, $location) {
+    .controller('signInCtrl', function ($scope, $location,signIn,$window) {
         $scope.user = {
             login:"",
             password:""
@@ -13,7 +13,7 @@ angular.module('dashboardApp')
 
         $scope.errorSignIn = false;
         $scope.signIn = function(){    
-            if($scope.user.login == "admin" && $scope.user.password == "admin"){                
+            /*if($scope.user.login == "admin" && $scope.user.password == "admin"){
                 $('#myModal').modal('hide');   
                 $('.modal-backdrop').remove();
                 $location.path("companies");                
@@ -21,7 +21,19 @@ angular.module('dashboardApp')
             }
             else{
                 $scope.errorSignIn = true;
-            }
+            }*/
+            $scope.errorSignIn = false; // display the message of error
+            signIn.get($scope.user.login, $scope.user.password)
+            .then(function(data){
+                $('#myModal').modal('hide');//hide modal
+                $('.modal-backdrop').remove();//clean the modal blur
+                $location.path("companies");//change the view
+                console.log(data);
+                $window.sessionStorage.token = data.sessionToken;
+            })
+            .catch(function(error){
+                $scope.errorSignIn = true;// show error message
+            });
         }                
 
     });

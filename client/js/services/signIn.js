@@ -21,6 +21,17 @@ angular.module('dashboardApp')
                   }
                 });
              return deferred.promise;
+        },
+        getActualUser: function(id){
+            var deferred = $q.defer();
+            var query = new Parse.Query(Parse.User);
+            query.equalTo("objectId", id);  // find all the women
+            query.find({
+              success: function(user) {
+                deferred.resolve(user);
+              }
+            });
+            return deferred.promise;
         }
     }
 });

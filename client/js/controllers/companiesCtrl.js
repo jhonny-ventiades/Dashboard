@@ -20,7 +20,11 @@ angular.module('dashboardApp')
         designation:"region_manager",
         company_name:"",
     }
+
+    $scope.createLabel = "Create Company/Region Manager";//change the label in header
+
     $scope.errorSameRegion = false;
+    $scope.regionsLoaded = false;
     
     $scope.selectCompany = function(){
         $location.path("company");
@@ -29,16 +33,11 @@ angular.module('dashboardApp')
     $scope.showReport = function(){
         $location.path("report");
     }
-    
-    $scope.logout = function(){
-        Parse.User.logOut();
-        $location.path("");
-    }
 
     $scope.loadRegionalManagersList = function(){
         regionManager.get()
         .then(function(data){
-            console.log(data);
+            $scope.regionsLoaded = true;
             angular.copy(data,$scope.regionsManagers);
         })
         .catch(function(data){
@@ -56,6 +55,7 @@ angular.module('dashboardApp')
                 regionManager.post($scope.regionManager)
                     .then(function(data){
                         $('#myModal').modal('hide');//hide modal
+                        $scope.loadRegionalManagersList();
                     })
                     .catch(function(data){
 
@@ -68,8 +68,11 @@ angular.module('dashboardApp')
         .catch(function(data){
 
         });
-
     }
 
+    $scope.companySelected = function(company){
+        angular.copy(company, $scope.company);
+        $location.path("users");
+    }
 
 });

@@ -27,7 +27,7 @@ angular.module('dashboardApp', [
             })          
             .when('/users', {
                 templateUrl: 'client/views/partials/users.html',
-                controller: ''
+                controller: 'usersCtrl'
             })          
             .otherwise({
                 redirectTo: '/'
@@ -37,13 +37,14 @@ angular.module('dashboardApp', [
     .run(function($rootScope, $location) {
         $rootScope.$on('$routeChangeStart', function (event, next, current) {
             var currentUser = Parse.User.current();//get the current user with parse
-            if (next.templateUrl == 'client/views/partials/companies.html') {
+            if (next.templateUrl == 'client/views/partials/companies.html'
+                || next.templateUrl == 'client/views/partials/users.html') {
                 if (!currentUser) {// if there are no users connected
                     $location.path('/');
                 }
             }
 
-            else if(next.templateUrl == 'client/views/partials/main.html'){ sign in button
+            else if(next.templateUrl == 'client/views/partials/main.html'){
                 if (currentUser) {
                     $location.path('/companies');
                 }

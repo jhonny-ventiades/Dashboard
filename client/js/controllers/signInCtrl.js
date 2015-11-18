@@ -12,16 +12,7 @@ angular.module('dashboardApp')
         };
 
         $scope.errorSignIn = false;
-        $scope.signIn = function(){    
-            /*if($scope.user.login == "admin" && $scope.user.password == "admin"){
-                $('#myModal').modal('hide');   
-                $('.modal-backdrop').remove();
-                $location.path("companies");                
-                
-            }
-            else{
-                $scope.errorSignIn = true;
-            }*/
+        $scope.signIn = function(){
             $scope.errorSignIn = false; // display the message of error
             signIn.get($scope.user.login, $scope.user.password)
             .then(function(data){
@@ -30,10 +21,12 @@ angular.module('dashboardApp')
                 $location.path("companies");//change the view
                 console.log(data);
                 $window.sessionStorage.token = data.sessionToken;
+                $scope.getActualUser();
             })
             .catch(function(error){
                 $scope.errorSignIn = true;// show error message
             });
-        }                
+        }
+
 
     });

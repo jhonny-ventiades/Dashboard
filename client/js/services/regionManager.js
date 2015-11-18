@@ -41,6 +41,7 @@ angular.module('dashboardApp')
             var deferred = $q.defer();
 
             user.set("username", manager.username);
+            user.set("name", manager.username);
             user.set("password", manager.password);
             user.set("email", manager.email);
             user.set("region", manager.region);
@@ -69,6 +70,7 @@ angular.module('dashboardApp')
             var results = [];
             var queryObject = new Parse.Query(RegionalManager);
             queryObject.equalTo("region",region);
+            queryObject.equalTo("designation","region_manager");
             queryObject.find({
             success: function (data) {
                 angular.copy(data,results);

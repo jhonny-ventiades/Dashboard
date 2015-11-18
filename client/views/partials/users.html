@@ -1,118 +1,76 @@
-<div class="container">
+<div ng-include="'client/views/partials/header.html'"></div>
+
+<div class="container" ng-init="validateCompany(); loadAssessors()">
+   <div class="row">
+       <h1>Assesors Management</h1>
+   </div>
     <div class="row">
-        <h1>Users Management</h1>
-         <div class="panel panel-default">
-  <!-- Default panel contents -->
-  <div class="panel-heading"  style="margin-bottom:10px">Users in the company</div>
-   
-    <div class="col-xs-10">
-        <div class="input-group">
-          <input type="text" class="form-control" placeholder="Search" aria-describedby="basic-addon2">
-          <span class="input-group-addon" id="basic-addon2">          
-              <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-          </span>
+        <div class="jumbotron" style="padding-top:10px; padding-bottom:10px">
+            <h3 class="text-primary">Regional Manager: {{company.username}}</h3>
+            <p>
+               <address>
+                <strong>Company:</strong> {{company.company_name}}<br>
+                <strong>Region:</strong> {{company.region}}<br>
+                <strong>Phone:</strong> {{company.phone}}<br>
+                <strong>Address:</strong> {{company.address}}<br>
+            </address>
+            </p>
         </div>
-    </div>    
-    <div  class="col-xs-1 text-center">
-        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#EditCompany">
-                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                <span class="hidden-xs">Create</span>
-        </button>
-    </div>
-    
-  <!-- Table -->
-  <table class="table">
-    <thead>       
-        <th>Name</th>
-        <th>Username</th>
-        <th>Email</th>    
-        <th>password</th>
-        <th>Status</th>
-        <th></th>        
-    </thead>
-    <tbody>
-       <tr>
-        <td>Name 1</td>
-        <td>User name 1</td>
-        <td>Email 1</td>
-        <td>Password 1</td>
-        <td>Manager 1</td>   
-        <td class="text-center">                       
-           <button type="button" class="btn btn-primary btn-xs">
-                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-            </button>
-            <button type="button" class="btn btn-danger btn-xs">
-                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-            </button>
-        </td>     
-        </tr>
-        
-       <tr>
-        <td>Name 2</td>
-        <td>User name 2</td>
-        <td>Email 2</td>
-        <td>Password 2</td>
-        <td>Manager 1</td>        
-        <td class="text-center">                       
-           <button type="button" class="btn btn-primary btn-xs">
-                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-            </button>
-            <button type="button" class="btn btn-danger btn-xs">
-                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-            </button>
-        </td>
-        </tr>
-        
-        <tr>
-        <td>Name 3</td>
-        <td>User name 3</td>
-        <td>Email 3</td>
-        <td>Password 3</td>
-        <td>Assessor 1</td>        
-        <td class="text-center">                       
-           <button type="button" class="btn btn-primary btn-xs">
-                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-            </button>
-            <button type="button" class="btn btn-danger btn-xs">
-                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-            </button>
-        </td>
-        </tr>
-        
-        <tr>
-        <td>Name 4</td>
-        <td>User name 4</td>
-        <td>Email 4</td>
-        <td>Password 4</td>
-        <td>Assessor 2</td>        
-        <td class="text-center">                       
-           <button type="button" class="btn btn-primary btn-xs">
-                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-            </button>
-            <button type="button" class="btn btn-danger btn-xs">
-                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-            </button>
-        </td>
-        </tr>
-        
-        <tr>
-        <td>Name 5</td>
-        <td>User name 5</td>
-        <td>Email 5</td>
-        <td>Password 5</td>
-        <td>Assesor 3</td>        
-        <td class="text-center">                       
-           <button type="button" class="btn btn-primary btn-xs">
-                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-            </button>
-            <button type="button" class="btn btn-danger btn-xs">
-                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-            </button>
-        </td>
-        </tr>
-    </tbody>
-  </table>
-</div>
+   </div>
+
+   <div class="row" ng-if="!assessorLoaded">
+       <div class="col-xs-12">
+           <img src="client/images/loading.gif" class="center-block img-responsive">
+       </div>
+   </div>
+
+   
+    <div class="row"  ng-if="assessorLoaded">
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading"  style="margin-bottom:10px">Assesors assigned to this company</div>
+
+            <div class="alert alert-warning text-center" role="alert" ng-if="assessorsList.length == 0">
+              <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+              <span class="sr-only">Empty</span>
+                  No assessors in this region
+            </div>
+
+
+            <div class="col-xs-12" ng-if="assessorsList.length != 0">
+                <div class="input-group">
+                  <input type="text" class="form-control" placeholder="Search" aria-describedby="basic-addon2">
+                  <span class="input-group-addon" id="basic-addon2">
+                      <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                  </span>
+                </div>
+            </div>
+
+            <!-- Table -->
+            <table class="table" ng-if="assessorsList.length != 0">
+            <thead>
+                <th>Email</th>
+                <th>password</th>
+                <th>Role</th>
+                <th></th>
+            </thead>
+            <tbody>
+                <tr ng-repeat="assessor in assessorsList">
+                    <td>{{assessor.username}}</td>
+                    <td>{{assessor.password}}</td>
+                    <td>{{assessor.designation}}</td>
+                    <td class="text-center">
+                       <button type="button" class="btn btn-primary btn-xs">
+                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                        </button>
+                        <button type="button" class="btn btn-danger btn-xs">
+                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+          </table>
+        </div>
     </div>
 </div>
 
@@ -122,43 +80,40 @@
 
 
 <!-- Modal -->
-<div class="modal fade" id="EditCompany" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Create User</h4>
+        <h4 class="modal-title" id="myModalLabel">Create Assessor</h4>
       </div>
       <div class="modal-body">
         
-          <form>
-          <div class="form-group">
-            <label for="exampleInputEmail1">Name</label>
-            <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Name">
-          </div>
-          <div class="form-group">
-            <label for="exampleInputPassword1">Phone</label>
-            <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Phone" >
-          </div>          
-          <div class="form-group">
-            <label for="exampleInputPassword1">Email</label>
-            <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Email">
-          </div>          
-          <div class="form-group">
-            <label for="exampleInputPassword1">Password</label>
-            <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Password">
-          </div>          
-          <div class="form-group">
-            <label for="exampleInputPassword1">Status</label>
-            <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Status" >
-          </div>
+
+
+        <form name="assessorForm" novalidate>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Email</label>
+                <input type="email" class="form-control"  placeholder="Email" ng-model="assessor.username"  required>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Password</label>
+                <input type="password" class="form-control" placeholder="Password" ng-model="assessor.password"  required>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Verify password</label>
+                <input type="password" class="form-control" placeholder="Passsword" ng-model="assessor.verify_password"  required>
+            </div>
+            <div class="alert alert-danger" role="alert" ng-if="assessor.password != assessor.verify_password">
+                <strong>Different passwords</strong>
+            </div>
         </form>
-          
-          
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+        <button type="button" class="btn btn-primary" ng-click="createAssessor()"
+         ng-disabled="assessorForm.$invalid">Create</button>
       </div>
     </div>
   </div>

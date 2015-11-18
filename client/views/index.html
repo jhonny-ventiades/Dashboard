@@ -21,9 +21,13 @@
     <script src="client/js/controllers/mainCtrl.js"></script>
     <script src="client/js/controllers/signInCtrl.js"></script>
     <script src="client/js/controllers/companiesCtrl.js"></script>
+    <script src="client/js/controllers/usersCtrl.js"></script>
+    <script src="client/js/services/signIn.js"></script>
+    <script src="client/js/services/regionManager.js"></script>
+    <script src="client/js/services/assessor.js"></script>
     <title>Dashboard</title>
 </head>
-<body ng-controller="mainCtrl">
+<body ng-controller="mainCtrl" ng-init="getActualUser()">
     <div ng-view=""></div>    
 </body>
 </html>

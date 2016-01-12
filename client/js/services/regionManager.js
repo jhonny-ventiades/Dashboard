@@ -6,7 +6,7 @@
  */
 
 angular.module('dashboardApp')
-    .factory('regionManager', function ($q) {
+    .factory('regionManager', function ($q,$window) {
         return {
          get: function(){
             var RegionalManager = Parse.Object.extend("User");
@@ -14,17 +14,19 @@ angular.module('dashboardApp')
             var results = [];
             var queryObject = new Parse.Query(RegionalManager);
             queryObject.equalTo("designation", "region_manager");
+            //queryObject.equalTo("visible", true);
             queryObject.find({
             success: function (data) {
                 angular.copy(data,results);
                 results.forEach(function(item){
                     item.username = item.get("username");
                     item.email = item.get("email");
-                    item.role = item.get("role");
+                    item.role = item.get("designation");
                     item.region = item.get("region");
                     item.phone = item.get("phone");
                     item.address = item.get("address");
                     item.company_name = item.get("company_name");
+                    item.uncrypt_password = item.get("uncrypt_password");
                 });
               deferred.resolve(results);
             },
@@ -34,7 +36,32 @@ angular.module('dashboardApp')
             });
             return deferred.promise;
         },
-
+        getActive: function(id){
+            var RegionalManager = Parse.Object.extend("User");
+            var deferred = $q.defer();
+            var results = {};
+            var queryObject = new Parse.Query(RegionalManager);
+            queryObject.equalTo("objectId", id);
+            //queryObject.equalTo("visible", true);
+            queryObject.first({
+                success: function (data) {
+                    angular.copy(data,results);
+                    results.username = data.get("username");
+                    results.email = data.get("email");
+                    results.role = data.get("designation");
+                    results.region = data.get("region");
+                    results.phone = data.get("phone");
+                    results.address = data.get("address");
+                    results.company_name = data.get("company_name");
+                    results.uncrypt_password = data.get("uncrypt_password");
+                    deferred.resolve(results);
+                },
+                error: function (error) {
+                    deferred.reject(error);
+                }
+            });
+            return deferred.promise;
+        },
 
         post: function(manager){
             var user = new Parse.User();
@@ -50,6 +77,8 @@ angular.module('dashboardApp')
             user.set("branch", manager.branch);
             user.set("designation",manager.designation);
             user.set("company_name", manager.company_name);
+            user.set("visible", true);
+            user.set("uncrypt_password", manager.password);
             user.signUp(null, {
               success: function(user) {
                 // Execute any logic that should take place after the object is saved.
@@ -63,7 +92,95 @@ angular.module('dashboardApp')
             });
             return deferred.promise;
         },
+            update: function(manager,actualUser){
+                var deferred = $q.defer();
+                //login the user to edit his values
+                Parse.User.logIn(manager.lastUsername, manager.uncrypt_password, {
+                  success: function(user) {
+                        var query = new Parse.Query(Parse.User);
+                        query.equalTo("email", manager.lastEmail);
+                        query.equalTo("designation", "region_manager");
+                        query.equalTo("region", manager.lastRegion);
+                        query.first({//get the object of the users
+                         success: function(objectToUpdate) {
+                                objectToUpdate.set("username", manager.username);
+                                if(manager.password != "")
+                                    objectToUpdate.set("password", manager.password);
+                                objectToUpdate.set("email", manager.email);
+                                objectToUpdate.set("region", manager.region);
+                                objectToUpdate.set("phone", manager.phone);
+                                objectToUpdate.set("address", manager.address);
+                                objectToUpdate.set("branch", manager.branch);
+                                objectToUpdate.set("designation",manager.designation);
+                                objectToUpdate.set("company_name", manager.company_name);
+                                objectToUpdate.save();
 
+                                Parse.User.logOut();//logout the user edited
+                                //login in the actual user(admin)
+                                Parse.User.logIn(actualUser.username,
+                                                actualUser.password,{
+                                         success: function(user) {
+                                            deferred.resolve(user);
+                                         },
+                                        error: function(error) {
+                                                 deferred.reject(error);
+                                            }
+                                         });
+
+                            },
+                            error: function(error) {
+                                 deferred.reject(error);
+                            }
+                        });
+                  },
+                  error: function(user, error) {
+                    // The login failed. Check error to see why.
+                  }
+                });
+
+            return deferred.promise;
+        },
+            delete: function(manager,actualUser){
+                 var deferred = $q.defer();
+                //login the user to edit his values
+                Parse.User.logIn(manager.username, manager.uncrypt_password, {
+                  success: function(user) {
+                        var query = new Parse.Query(Parse.User);
+
+                        query.equalTo("email", manager.email);
+                        query.equalTo("designation", "region_manager");
+                        query.equalTo("region", manager.region);
+                        query.first({//get the object of the users
+                         success: function(objectToUpdate) {
+                                objectToUpdate.set("visible", false);
+                                objectToUpdate.save();
+
+                                Parse.User.logOut();//logout the user edited
+                                //login in the actual user(admin)
+                                Parse.User.logIn(actualUser.username,
+                                                actualUser.password,{
+                                         success: function(user) {
+                                            $window.sessionStorage.token = user.sessionToken;
+                                            deferred.resolve(user);
+                                         },
+                                        error: function(error) {
+                                                 deferred.reject(error);
+                                            }
+                                         });
+
+                            },
+                            error: function(error) {
+                                 deferred.reject(error);
+                            }
+                        });
+                  },
+                  error: function(user, error) {
+                    // The login failed. Check error to see why.
+                  }
+                });
+
+            return deferred.promise;
+        },
         validateRegion: function(region){
             var RegionalManager = Parse.Object.extend("User");
             var deferred = $q.defer();
@@ -82,26 +199,6 @@ angular.module('dashboardApp')
             });
             return deferred.promise;
         },
-
-
-        delete: function(id){
-            var Risk = Parse.Object.extend("risk");
-            var deferred = $q.defer();
-            var deleteRisk = new Risk();
-            deleteRisk.id = id;
-            deleteRisk.destroy({
-                success: function(myObject) {
-                    // The object was deleted from the Parse Cloud.
-                    deferred.resolve(myObject);
-                },
-                error: function(myObject, error) {
-                    // The delete failed.
-                    // error is a Parse.Error with an error code and message.+
-                    deferred.reject(error);
-                }
-            });
-            return deferred.promise;
-        }
     }
 
 });

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
         
     <base href="/projects/Dashboard/">
-    <!--<base href="/">   -->
+    <!--<base href="/">-->
 
     <link rel="stylesheet" type="text/css" href="client/bower_components/bootstrap/dist/css/bootstrap.css" />    
     <link rel="stylesheet" type="text/css" href="client/css/main.css" media="all"/>
@@ -22,9 +22,11 @@
     <script src="client/js/controllers/signInCtrl.js"></script>
     <script src="client/js/controllers/companiesCtrl.js"></script>
     <script src="client/js/controllers/usersCtrl.js"></script>
+    <script src="client/js/controllers/reportCtrl.js"></script>
     <script src="client/js/services/signIn.js"></script>
     <script src="client/js/services/regionManager.js"></script>
     <script src="client/js/services/assessor.js"></script>
+    <script src="client/js/services/session.js"></script>
     <title>Dashboard</title>
 </head>
 <body ng-controller="mainCtrl" ng-init="getActualUser()">

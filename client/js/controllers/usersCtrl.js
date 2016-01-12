@@ -5,7 +5,7 @@
 'use strict';
 
 angular.module('dashboardApp')
-    .controller('usersCtrl', function ($scope,$location,assessors) {
+    .controller('usersCtrl', function ($scope,$location,assessors,$routeParams,regionManager,assessorsAndroid) {
 
     $scope.assessorsList = [];
 
@@ -19,19 +19,25 @@ angular.module('dashboardApp')
         address:"",
         branch:"branch",
         designation:"assessor",
-        company_name:"",
+        company_name:""
     }
+
+    $scope.assessorEdit = {};
+
+    $scope.errorExistingEmail = false;
+    $scope.search = "";
 
     $scope.assessorLoaded = false;//change icon logo
-    $scope.createLabel = "Create Assessors";//change the label in header
-
-    $scope.validateCompany = function(){
-        if($scope.company.username === undefined)
-            $location.path("companies");
-    }
+    $scope.createLabel = "Create Manager/Assessor";//change the label in header
 
     $scope.loadAssessors = function(){
-        assessors.get($scope.company.region)
+        $scope.id = $routeParams.id;
+
+        regionManager.getActive($scope.id)
+        .then(function(data){
+            angular.copy(data,$scope.company);
+
+            assessors.get($scope.company.region)
             .then(function(data){
                 angular.copy(data,$scope.assessorsList);
                 $scope.assessorLoaded = true;
@@ -39,6 +45,10 @@ angular.module('dashboardApp')
             .catch(function(error){
                 console.log(error);
             });
+        })
+        .catch(function(data){
+            //$location.path("/");
+        });
     }
 
     $scope.createAssessor = function(){
@@ -52,12 +62,72 @@ angular.module('dashboardApp')
 
         assessors.post($scope.assessor)
             .then(function(data){
+                assessorsAndroid.post($scope.assessor)
+                    .then(function(data){
+                        console.log(data);
+                    })
+                    .catch(function(error){
+                        console.log(error);
+                    });
                 $('#myModal').modal('hide');//hide modal
                 $scope.loadAssessors();
             })
             .catch(function(error){
-                console.log(error);
+                if(error.code == 202){
+                    $("#emailAssessorTextBox").focus();
+                    $scope.errorExistingEmail = true;
+                }
             });
+    }
+
+    $scope.copyAssessor = function(assesor){
+        angular.copy(assesor,$scope.assessorEdit);
+        $scope.assessorEdit.lastUsername = assesor.username;
+        $scope.assessorEdit.verify_password = assesor.password;
+        $scope.assessorEdit.lastEmail = assesor.email;//email saved to have a reference to find the object
+        $scope.assessorEdit.lastRegion = assesor.region;//region saved to have a reference to find the object
+        $scope.assessorEdit.uncrypt_password = assesor.password;
+    }
+
+    $scope.editAssessor = function(){
+        $scope.assessorEdit.email = $scope.assessorEdit.username;
+
+        assessors.update($scope.assessorEdit,$scope.myUser)
+            .then(function(data){
+                $('#editModal').modal('hide');//hide modal
+                $scope.loadAssessors();
+                $scope.assessorEdit = {};
+            })
+            .catch(function(data){
+                if(data.code==202){
+                    $("#emailAssessorTextBox").focus();
+                    $scope.errorExistingEmail = true;
+                }
+            });
+
+    }
+
+    $scope.deleteAssessor = function(assessor){
+      var r = confirm("Are you sure to delete this user?");
+        if (r == true) {
+             assessors.delete(assessor,$scope.myUser)
+                    .then(function(data){
+                        console.log(data);
+                        $scope.loadAssessors();
+                    })
+                    .catch(function(data){
+                        console.log(data);
+                    });
+        } else {
+            r = "You pressed Cancel!";
+        }
+    }
+
+    $scope.checkingUserChange = function(){
+        if($scope.myUser.designation == 'manager'){
+            $scope.createLabel = "Create Assessor";//change the label in headerdes
+            $scope.assessor.designation = "assessor";
+        }
     }
 
 });

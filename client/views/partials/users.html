@@ -1,19 +1,19 @@
 <div ng-include="'client/views/partials/header.html'"></div>
 
-<div class="container" ng-init="validateCompany(); loadAssessors()">
+<div class="container" ng-init="loadAssessors()">
    <div class="row">
-       <h1>Assesors Management</h1>
+       <h1>{{company.company_name}}</h1>
    </div>
     <div class="row">
         <div class="jumbotron" style="padding-top:10px; padding-bottom:10px">
-            <h3 class="text-primary">Regional Manager: {{company.username}}</h3>
+            <h3><small><strong  class="text-primary"><em>Company Information</em></strong></small></h3>
             <p>
-               <address>
-                <strong>Company:</strong> {{company.company_name}}<br>
-                <strong>Region:</strong> {{company.region}}<br>
-                <strong>Phone:</strong> {{company.phone}}<br>
-                <strong>Address:</strong> {{company.address}}<br>
-            </address>
+                <address>
+                    <strong>Regional Manager:</strong> {{company.username}}<br>
+                    <strong>Region:</strong> {{company.region}}<br>
+                    <strong>Phone:</strong> {{company.phone}}<br>
+                    <strong>Address:</strong> {{company.address}}<br>
+                </address>
             </p>
         </div>
    </div>
@@ -37,15 +37,14 @@
             </div>
 
 
-            <div class="col-xs-12" ng-if="assessorsList.length != 0">
+            <div class="col-xs-12" ng-hide="assessorsList.length== 0">
                 <div class="input-group">
-                  <input type="text" class="form-control" placeholder="Search" aria-describedby="basic-addon2">
+                  <input type="text" class="form-control" placeholder="Search" ng-model="search" >
                   <span class="input-group-addon" id="basic-addon2">
                       <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                   </span>
                 </div>
             </div>
-
             <!-- Table -->
             <table class="table" ng-if="assessorsList.length != 0">
             <thead>
@@ -55,15 +54,16 @@
                 <th></th>
             </thead>
             <tbody>
-                <tr ng-repeat="assessor in assessorsList">
+                <tr ng-repeat="assessor in assessorsList |  filter:{username:search}">
                     <td>{{assessor.username}}</td>
                     <td>{{assessor.password}}</td>
                     <td>{{assessor.designation}}</td>
                     <td class="text-center">
-                       <button type="button" class="btn btn-primary btn-xs">
+                       <button type="button" class="btn btn-primary btn-xs"  aria-label="Left Align" title="Edit Assessor"
+                             ng-click="copyAssessor(assessor)"  data-toggle="modal" data-target="#editModal">
                             <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                         </button>
-                        <button type="button" class="btn btn-danger btn-xs">
+                        <button type="button" class="btn btn-danger btn-xs" ng-click="deleteAssessor(assessor)">
                             <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                         </button>
                     </td>
@@ -73,29 +73,36 @@
         </div>
     </div>
 </div>
+{{checkingUserChange()}}
 
 
 
-
-
-
-<!-- Modal -->
+<!-- CREATE Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Create Assessor</h4>
+        <h4 class="modal-title" id="myModalLabel">Create Manager/Assessor</h4>
       </div>
       <div class="modal-body">
-        
-
-
         <form name="assessorForm" novalidate>
+            <address>
+                <strong>Company:</strong> {{company.company_name}} &nbsp;&nbsp;
+                <strong>Region:</strong> {{company.region}}<br>
+                <strong>Phone:</strong> {{company.phone}}<br>
+                <strong>Address:</strong> {{company.address}}<br>
+            </address>
             <div class="form-group">
                 <label for="exampleInputEmail1">Email</label>
-                <input type="email" class="form-control"  placeholder="Email" ng-model="assessor.username"  required>
+                <input type="email" id="emailAssessorTextBox" class="form-control"  placeholder="Email"
+                        ng-model="assessor.username"  required>
             </div>
+            <!--MESSAge of error, already exist this email-->
+            <div class="alert alert-danger" role="alert" ng-if="errorExistingEmail == true">
+                <strong>This email already exist, use another.</strong>
+            </div>
+
             <div class="form-group">
                 <label for="exampleInputPassword1">Password</label>
                 <input type="password" class="form-control" placeholder="Password" ng-model="assessor.password"  required>
@@ -104,16 +111,86 @@
                 <label for="exampleInputPassword1">Verify password</label>
                 <input type="password" class="form-control" placeholder="Passsword" ng-model="assessor.verify_password"  required>
             </div>
-            <div class="alert alert-danger" role="alert" ng-if="assessor.password != assessor.verify_password">
+            <div class="alert alert-danger" role="alert" ng-if="assessor.password != assessor.verify_password                                                                                    && assessor.password != ''
+                                                                   && assessor.verify_password != ''">
                 <strong>Different passwords</strong>
+            </div>
+            <div class="form-group">
+                <label for="accessLevelInput">Access Level</label>
+                <select ng-model="assessor.designation" class="form-control" ng-disabled="myUser.designation == 'manager'">
+                    <option value="assessor">Assessor</option>
+                    <option value="manager">Manager</option>
+                </select>
             </div>
         </form>
 
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" ng-click="createAssessor()"
-         ng-disabled="assessorForm.$invalid">Create</button>
+        <button type="button" class="btn btn-success" ng-click="createAssessor()"
+         ng-disabled="assessorForm.$invalid || assessor.password != assessor.verify_password">Create</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- EDIT Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Edit Manager/Assessor</h4>
+      </div>
+      <div class="modal-body">
+        <form name="assessorEditForm" novalidate>
+            <address>
+                <strong>Company:</strong> {{company.company_name}} &nbsp;&nbsp;
+                <strong>Region:</strong> {{company.region}}<br>
+                <strong>Phone:</strong> {{company.phone}}<br>
+                <strong>Address:</strong> {{company.address}}<br>
+            </address>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Email</label>
+                <input type="email" id="emailAssessorEditTextBox" class="form-control"  placeholder="Email"
+                        ng-model="assessorEdit.username"  required>
+            </div>
+
+            <!--MESSAge of error, already exist this email-->
+            <div class="alert alert-danger" role="alert" ng-if="errorExistingEmail == true">
+              <strong>This email already exist, use another.</strong>
+            </div>
+
+            <div class="form-group">
+                <label for="exampleInputPassword1">Password</label>
+                <input type="password" class="form-control" placeholder="Password" ng-model="assessorEdit.password"  required>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Verify password</label>
+                <input type="password" class="form-control" placeholder="Passsword" ng-model="assessorEdit.verify_password"  required>
+            </div>
+            <div class="alert alert-danger" role="alert" ng-if="assessorEdit.password != assessorEdit.verify_password                                                                                    && assessorEdit.password != ''
+                                                                   && assessorEdit.verify_password != ''">
+                <strong>Different passwords</strong>
+            </div>
+
+            <div class="form-group">
+                <label for="accessLevelInput">Access Level</label>
+                <select ng-model="assessorEdit.designation" class="form-control" ng-disabled="myUser.designation == 'manager'">
+                    <option value="assessor">Assessor</option>
+                    <option value="manager">Manager</option>
+                </select>
+            </div>
+        </form>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" ng-click="editAssessor()"
+         ng-disabled="assessorEditForm.$invalid || assessorEdit.password != assessorEdit.verify_password">Edit</button>
       </div>
     </div>
   </div>

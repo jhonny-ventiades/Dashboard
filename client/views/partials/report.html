@@ -1,30 +1,96 @@
-<div class="container">
-   <div class="col-xs-12small-12 columns">
-    <div class="paper">
-        <div class="text-center">
-            <h1>Report</h1>
-            
-        <hr width="100%">
+<nav class="navbar navbar-default" style="border-radius:0" >
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">
+              Wamitab Dashboard/<span class="text-primary">{{actualUserLabel}}</span>
+          </a>
         </div>
-        <ul style="padding: 50px">            
-            <li>Number of sessions:  <strong>500 sessions per day</strong></li>
-            <li>Android user:  <strong>250 active users</strong></li>
-            <li>Iphone user:  <strong>250 active users</strong></li>            
-            <li>Number of orders completed:  <strong>234 Oders completed in total</strong></li>
-            <li>Number of orders completed per day:  <strong>14 Oders completed per day</strong></li>
-            <li><strong>23</strong> pdf completed</li>
-            
-            <br>
-            <h4>Users in the company</h4>
-            <li>2 Regional Managers</li>
-            <li>10 Assessors</li>
-        </ul>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+         <a href="" class="btn btn-danger navbar-btn navbar-right" ng-click="logout()">Logout</a>
+          <ul class="nav navbar-nav navbar-right">
+            <li ng-click="actionCreate()"><a href="#" class="text-primary" style="color:blue !important" data-toggle="modal" data-target="#myModal">
+              <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
+                 Print</a></li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+
     </div>
-    
-    <a class="btn btn-primary hidden-print center-block" onclick="printReport()" >        
-        Print
-    </a>
-</div>
+</nav>
+
+
+
+
+<div class="container" ng-init="loadInformation()">
+    <div class="col-xs-12 columns">
+        <div class="paper">
+            <!--<div class="text-center">
+                <h1>Report</h1>
+
+            <hr width="100%">
+            </div>
+            <ul style="padding: 50px">
+                <li>Number of sessions:  <strong>500 sessions per day</strong></li>
+                <li>Android user:  <strong>250 active users</strong></li>
+                <li>Iphone user:  <strong>250 active users</strong></li>
+                <li>Number of orders completed:  <strong>234 Oders completed in total</strong></li>
+                <li>Number of orders completed per day:  <strong>14 Oders completed per day</strong></li>
+                <li><strong>23</strong> pdf completed</li>
+
+                <br>
+                <h4>Users in the company</h4>
+                <li>2 Regional Managers</li>
+                <li>10 Assessors</li>
+            </ul>-->
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <td colspan="2" class="text-center"> <h1>Report</h1></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Number of sessions:</td>
+                        <td><strong>{{sessions.length}}</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Android User:</td>
+                        <td><strong>{{counterIphoneUsers}}</strong></td>
+                    </tr>
+                    <tr>
+                        <td>IPhone User:</td>
+                        <td><strong>{{counterIphoneUsers}}</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Number of orders completed:</td>
+                        <td><strong>{{sessions.length}}</strong></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"> <h2>Users</h2></td>
+                    </tr>
+                    <tr>
+                        <td>Managers</td>
+                        <td>{{countAssessor}}</td>
+                    </tr>
+                    <tr>
+                        <td>Assessor</td>
+                        <td>{{countManager}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <a class="btn btn-primary hidden-print center-block" onclick="printReport()" >
+            Print
+        </a>
+    </div>
 </div>
 
 

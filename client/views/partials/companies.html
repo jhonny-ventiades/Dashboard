@@ -1,6 +1,6 @@
 <div ng-include="'client/views/partials/header.html'" ></div>
 
-<div class="container" ng-init="loadRegionalManagersList()" >
+<div class="container" ng-init="redirectUser();loadRegionalManagersList()" >
 
    <div class="row">
       <div class="col-xs-12">
@@ -30,15 +30,15 @@
                             <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
                        </a>
                        <button type="button" class="btn btn-warning btn-sm" aria-label="Left Align" title="Get report"
-                           ng-click="showReport()">
+                           ng-click="showReport(manager.id)">
                             <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
                        </button>
                        <button type="button" class="btn btn-primary btn-sm" aria-label="Left Align" title="Edit company"
-                            data-toggle="modal" data-target="#EditCompany">
+                             ng-click="copyRegionManager(manager)"  data-toggle="modal" data-target="#editModal">
                             <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                         </button>
                         <button type="button" class="btn btn-danger btn-sm" aria-label="Left Align" title="Delete company"
-                           onclick="deleteCompany()">
+                           ng-click="deleteRegionManager(manager)">
                             <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                         </button>
                     </div>
@@ -51,64 +51,74 @@
 
 
 
-
-
-
-
-<!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<!-- Modal EDIT a Region manager/company-->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Create Region Manager</h4>
+        <h4 class="modal-title" id="myModalLabel">Edit Company & Corporate Leader</h4>
       </div>
       <div class="modal-body">
-          <form name="managerForm" novalidate>
+          <form name="managerEditForm" novalidate>
+          <h4><small><strong><em>Company Information</em></strong></small></h4>
           <div class="form-group">
-            <label for="exampleInputEmail1">Email</label>
-            <input type="email" class="form-control"  placeholder="Email" ng-model="regionManager.username"  required>
+            <label for="exampleInputEmail1">Company Name</label>
+            <input type="text" class="form-control" placeholder="Company Name" ng-model="regionManagerEdit.company_name" required>
           </div>
           <div class="form-group">
+            <label for="exampleInputEmail1">Phone</label>
+            <input type="text" class="form-control" placeholder="Phone" ng-model="regionManagerEdit.phone" required>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Address</label>
+            <input type="text" class="form-control" placeholder="Address" ng-model="regionManagerEdit.address" required>
+          </div>
+
+          <hr width="100%">
+          <h4><small><strong><em>Corporate Leader Information</em></strong></small></h4>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Email</label>
+            <input type="email" class="form-control" id="emailEditTextBox" placeholder="Email" ng-model="regionManagerEdit.username"  required>
+          </div>
+
+          <!--MESSAge of error, already exist this email-->
+          <div class="alert alert-danger" role="alert" ng-if="errorExistingEmail == true">
+              <strong>This email already exist, use another.</strong>
+          </div>
+
+          <div class="form-group">
             <label for="exampleInputPassword1">Password</label>
-            <input type="password" class="form-control" placeholder="Password" ng-model="regionManager.password"  required>
+            <input type="password" class="form-control" placeholder="Password" ng-model="regionManagerEdit.password">
           </div>          
           <div class="form-group">
             <label for="exampleInputPassword1">Verify password</label>
-            <input type="password" class="form-control" placeholder="Passsword" ng-model="regionManager.verify_password"  required>
+            <input type="password" class="form-control" placeholder="Passsword" ng-model="regionManagerEdit.verify_password">
           </div>
-          <div class="alert alert-danger" role="alert" ng-if="regionManager.password != regionManager.verify_password">
+          <div class="alert alert-danger" role="alert" ng-if="regionManagerEdit.password != regionManagerEdit.verify_password                                                                  && regionManagerEdit.password != ''
+                                                                 && regionManagerEdit.verify_password != '' ">
               <strong>Different passwords</strong>
           </div>
 
           <div class="form-group">
             <label for="exampleInputEmail1">Region</label>
-            <input type="text" class="form-control" placeholder="Region" ng-model="regionManager.region" required>
+            <input type="text" class="form-control" placeholder="Region" ng-model="regionManagerEdit.region" required>
           </div>
           <div class="alert alert-danger" role="alert" ng-if="errorSameRegion">
             <strong>Error!</strong>, This Regions already exist.
           </div>
 
-          <hr width="100%">
           <div class="form-group">
-            <label for="exampleInputEmail1">Company Name</label>
-            <input type="text" class="form-control" placeholder="Company Name" ng-model="regionManager.company_name" required>
-          </div>          
-          <div class="form-group">
-          <div class="form-group">
-            <label for="exampleInputEmail1">Phone</label>
-            <input type="text" class="form-control" placeholder="Phone" ng-model="regionManager.phone" required>
-          </div>          
-          <div class="form-group">
-            <label for="exampleInputEmail1">Address</label>
-            <input type="text" class="form-control" placeholder="Address" ng-model="regionManager.address" required>
+            <label for="exampleInputEmail1">Access Level</label>
+            <input type="text" class="form-control" placeholder="Coporate Leader"  ng-disabled="true">
           </div>
         </form>
       </div>
+
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" ng-click="createRegionManager()"
-         ng-disabled="managerForm.$invalid">Create</button>
+        <button type="button" class="btn btn-primary" ng-click="editRegionManager()"
+         ng-disabled="managerEditForm.$invalid  || regionManagerEdit.password != regionManagerEdit.verify_password">Edit</button>
       </div>
     </div>
   </div>
@@ -116,8 +126,82 @@
 
 
 
-<script>
-    var deleteCompany = function(){
-        alert("Company Deleted, this is a mockup!");
-    }    
-</script>
+
+
+
+
+
+
+
+<!-- Modal Create a Region manager/company-->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Create Company & Corporate Leader</h4>
+      </div>
+      <div class="modal-body">
+          <form name="managerForm" novalidate>
+          <h4><small><strong><em>Company Information</em></strong></small></h4>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Company Name</label>
+            <input type="text" class="form-control" placeholder="My company" ng-model="regionManager.company_name" required>
+          </div>          
+          <div class="form-group">
+            <label for="exampleInputEmail1">Phone</label>
+            <input type="tel" class="form-control" placeholder="+910000000001" ng-model="regionManager.phone" required>
+          </div>          
+          <div class="form-group">
+            <label >Address</label>
+            <input type="text" class="form-control" placeholder="Street #, City - Country" ng-model="regionManager.address" required>
+          </div>
+
+          <hr width="100%">
+          <h4><small><strong><em>Corporate Leader Information</em></strong></small></h4>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Email</label>
+            <input type="email" class="form-control" id="emailTextBox" placeholder="example@email.com" ng-model="regionManager.username"  required>
+          </div>
+          <!--MESSAge of error, already exist this email-->
+          <div class="alert alert-danger" role="alert" ng-if="errorExistingEmail == true">
+              <strong>This email already exist, use another.</strong>
+          </div>
+
+          <div class="form-group">
+            <label for="exampleInputPassword1">Password</label>
+            <input type="password" class="form-control" placeholder="mypassword" ng-model="regionManager.password"  required>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">Verify password</label>
+            <input type="password" class="form-control" placeholder="mypassword" ng-model="regionManager.verify_password"  required>
+          </div>
+          <div class="alert alert-danger" role="alert" ng-if="regionManager.password != regionManager.verify_password
+                                                             && regionManager.password != ''
+                                                             && regionManager.verify_password != '' ">
+              <strong>Different passwords</strong>
+          </div>
+
+          <div class="form-group">
+            <label for="exampleInputEmail1">Region</label>
+            <input type="text" class="form-control" placeholder="region #" ng-model="regionManager.region" required>
+          </div>
+          <div class="alert alert-danger" role="alert" ng-if="errorSameRegion">
+            <strong>Error!</strong>, This Regions already exist.
+          </div>
+
+          <div class="form-group">
+            <label for="exampleInputEmail1">Access Level</label>
+            <input type="text" class="form-control" placeholder="Coporate Leader"  ng-disabled="true">
+          </div>
+        </form>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-success" ng-click="createRegionManager()"
+         ng-disabled="managerForm.$invalid || regionManager.password != regionManager.verify_password">Create</button>
+      </div>
+    </div>
+  </div>
+</div>

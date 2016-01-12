@@ -32,6 +32,64 @@ angular.module('dashboardApp')
               }
             });
             return deferred.promise;
+        },
+        countUsers: function(region){
+            var deferred = $q.defer();
+            var query = new Parse.Query(Parse.User);
+            query.equalTo("region", region);
+            query.count({
+              success: function(count) {
+                // The count request succeeded. Show the count
+                deferred.resolve(count);
+                  console.log(count);
+              },
+              error: function(error) {
+                // The request failed
+                deferred.resolve(error);
+                  console.log(error)
+              }
+            });
+            return deferred.promise;
+        },
+
+        countManagers: function(region){
+            var deferred = $q.defer();
+            var query = new Parse.Query(Parse.User);
+            query.equalTo("region", region);
+            query.equalTo("designation", "manager");
+            query.count({
+              success: function(count) {
+                // The count request succeeded. Show the count
+                deferred.resolve(count);
+                  console.log(count);
+              },
+              error: function(error) {
+                // The request failed
+                deferred.resolve(error);
+                  console.log(error)
+              }
+            });
+            return deferred.promise;
+        },
+        countAssessor: function(region){
+            var deferred = $q.defer();
+            var query = new Parse.Query(Parse.User);
+            query.equalTo("region", region);
+            query.equalTo("designation", "assessor");
+            query.count({
+              success: function(count) {
+                // The count request succeeded. Show the count
+                deferred.resolve(count);
+                  console.log(count);
+              },
+              error: function(error) {
+                // The request failed
+                deferred.resolve(error);
+                  console.log(error)
+              }
+            });
+            return deferred.promise;
         }
+
     }
 });

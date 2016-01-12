@@ -18,8 +18,7 @@ angular.module('dashboardApp')
             .then(function(data){
                 $('#myModal').modal('hide');//hide modal
                 $('.modal-backdrop').remove();//clean the modal blur
-                $location.path("companies");//change the view
-                console.log(data);
+                //$location.path("companies");//change the view
                 $window.sessionStorage.token = data.sessionToken;
                 $scope.getActualUser();
             })

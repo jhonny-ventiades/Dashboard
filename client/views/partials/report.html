@@ -59,11 +59,11 @@
                 <tbody>
                     <tr>
                         <td>Number of sessions:</td>
-                        <td><strong>{{sessions.length}}</strong></td>
+                        <td><strong>{{sessions.length + android.sessions}}</strong></td>
                     </tr>
                     <tr>
                         <td>Android User:</td>
-                        <td><strong>{{counterIphoneUsers}}</strong></td>
+                        <td><strong>{{android.totalUsers}}</strong></td>
                     </tr>
                     <tr>
                         <td>IPhone User:</td>
@@ -71,18 +71,18 @@
                     </tr>
                     <tr>
                         <td>Number of orders completed:</td>
-                        <td><strong>{{sessions.length}}</strong></td>
+                        <td><strong>{{sessions.length + android.sessions}}</strong></td>
                     </tr>
                     <tr>
                         <td colspan="2"> <h2>Users</h2></td>
                     </tr>
                     <tr>
                         <td>Managers</td>
-                        <td>{{countAssessor}}</td>
+                        <td>{{countAssessor+  android.assessors}}</td>
                     </tr>
                     <tr>
                         <td>Assessor</td>
-                        <td>{{countManager}}</td>
+                        <td>{{countManager + android.managers}}</td>
                     </tr>
                 </tbody>
             </table>

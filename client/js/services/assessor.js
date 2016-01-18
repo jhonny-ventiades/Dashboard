@@ -6,7 +6,7 @@
  */
 
 angular.module('dashboardApp')
-    .factory('assessors', function ($q,$window) {
+    .factory('assessors', function ($q,$window,assessorAndroid,createAssessorAndroid) {
         return {
          get: function(region){
             var deferred = $q.defer();
@@ -19,8 +19,8 @@ angular.module('dashboardApp')
             queryDesignationManager.equalTo("designation","assessor");
 
             var queryObject = new Parse.Query.or(queryDesignationAssesor,queryDesignationManager);
-
-            //queryObject.equalTo("visible", true);
+            queryObject.equalTo("region", region);
+            queryObject.equalTo("visible", true);
             queryObject.find({
             success: function (data) {
                 angular.copy(data,results);
@@ -31,7 +31,28 @@ angular.module('dashboardApp')
                     item.designation = item.get("designation");
                     item.region = item.get("region");
                 });
-              deferred.resolve(results);
+
+                assessorAndroid.get({"region":region})
+                .$promise
+                .then(function(data){
+                    data.forEach(function(item){
+                        if(item.designation == "Assessor")item.designation = "assessor";
+                        if(item.designation == "Manager")item.designation = "manager";
+                        /*results.push({
+                            username:item.username,
+                            email:item.email,
+                            password: item.uncrypt_password,
+                            designation: item.designation,
+                            region: item.region
+                        });*/
+                        console.log(item);
+                    });
+
+                    deferred.resolve(results);
+                })
+                .catch(function(error){
+                    console.log(error);
+                })
             },
             error: function (error) {
               deferred.reject(error);
@@ -42,7 +63,8 @@ angular.module('dashboardApp')
 
 
         post: function(manager){
-            var user = new Parse.User();
+            var User = Parse.Object.extend("_User");
+            var user = new User();
             var deferred = $q.defer();
             user.set("username", manager.username);
             user.set("name", manager.username);
@@ -56,10 +78,20 @@ angular.module('dashboardApp')
             user.set("company_name", manager.company_name);
             user.set("uncrypt_password", manager.uncrypt_password);
             user.set("visible", true);
-            user.signUp(null, {
+            user.save(null, {
               success: function(user) {
+                console.log(user);
                 // Execute any logic that should take place after the object is saved.
-                deferred.resolve(user);
+                createAssessorAndroid.post(manager)
+                .$promise
+                .then(function(data){
+                    console.log(data);
+                    deferred.resolve(user);
+                })
+                .catch(function(error){
+                    console.log(error);
+                    deferred.resolve(user);
+                });
               },
               error: function(user, error) {
                 // Execute any logic that should take place if the save fails.
@@ -115,19 +147,25 @@ angular.module('dashboardApp')
 
             return deferred.promise;
         },
-            delete: function(manager,actualUser){
+            delete: function(assessor,actualUser){ console.log(assessor);
                  var deferred = $q.defer();
                 //login the user to edit his values
-                /*Parse.User.logIn(manager.username, manager.password, {
+                Parse.User.logIn(assessor.username, assessor.password, {
                   success: function(user) {
                         var query = new Parse.Query(Parse.User);
-
-                        query.equalTo("username", manager.username);
-                        query.equalTo("designation", "assessor");
-                        query.equalTo("region", manager.region);
+                        query.equalTo("username", assessor.username );
+                        query.equalTo("designation", assessor.designation );
+                        query.equalTo("region", assessor.region );
                         query.first({//get the object of the users
                          success: function(objectToUpdate) {
-                                objectToUpdate.set("visible", false);
+                                console.log(assessor);
+                                objectToUpdate.set("username", assessor.username +"_DELETED");
+                                if(assessor.password != "")
+                                    objectToUpdate.set("palastUsernamessword", assessor.password);
+                                objectToUpdate.set("email", assessor.email  +"_DELETED");
+                                objectToUpdate.set("region",assessor.region  +"_DELETED");
+                                objectToUpdate.set("role",assessor.role  +"_DELETED");
+                                objectToUpdate.set("visible",false);
                                 objectToUpdate.save();
 
                                 Parse.User.logOut();//logout the user edited
@@ -135,74 +173,29 @@ angular.module('dashboardApp')
                                 console.log(actualUser);
                                 Parse.User.logIn(actualUser.username,
                                                 actualUser.password,{
-                                     success: function(user) {
-                                        $window.sessionStorage.token = user.sessionToken;
-                                        deferred.resolve(user);
-                                     },
-                                    error: function(error) {
-                                             deferred.reject(error);
-                                        }
-                                     });
+                                         success: function(user) {
+                                            deferred.resolve(user);
+                                         },
+                                        error: function(error) {
+                                                 deferred.reject(error);
+                                            }
+                                         });
 
                             },
                             error: function(error) {
+                                console.log(error);
                                  deferred.reject(error);
                             }
                         });
                   },
                   error: function(user, error) {
+                      console.log(error);
                     // The login failed. Check error to see why.
-                  }
-                });*/
-
-                /*var results = [];
-
-                var queryDesignationAssesor = new Parse.Query(Parse.User);
-                queryDesignationAssesor.equalTo("designation","manager");
-
-                var queryDesignationManager= new Parse.Query(Parse.User);
-                queryDesignationManager.equalTo("designation","assessor");
-
-                var queryObject = new Parse.Query.or(queryDesignationAssesor,queryDesignationManager);
-
-                //queryObject.equalTo("visible", true);
-                queryObject.first({
-                success: function (user) {
-                    console.log(user);
-                    //Parse.Cloud.useMasterKey();
-                    user.destroy();
-                    deferred.resolve(results);
-                },
-                error: function (error) {
-                  deferred.reject(error);
-                }
-                });*/
-
-                var query = new Parse.Query(Parse.User);
-                query.get("GqjutUtZbJ", {
-                  success: function(gameScore) {
-                      console.log(gameScore);
-                    // The object was retrieved successfully.
-                      gameScore.destroy({
-                          success: function(myObject) {
-                            // The object was deleted from the Parse Cloud.
-                              deferred.resolve(myObject);
-                          },
-                          error: function(myObject, error) {
-                            // The delete failed.
-                            // error is a Parse.Error with an error code and message.
-                              deferred.resolve(error);
-                          }
-                        });
-                  },
-                  error: function(object, error) {
-                    // The object was not retrieved successfully.
-                    // error is a Parse.Error with an error code and message.
                   }
                 });
 
-
             return deferred.promise;
+
         },
 
     }

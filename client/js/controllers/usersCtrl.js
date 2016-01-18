@@ -5,7 +5,7 @@
 'use strict';
 
 angular.module('dashboardApp')
-    .controller('usersCtrl', function ($scope,$location,assessors,$routeParams,regionManager,assessorsAndroid) {
+    .controller('usersCtrl', function ($scope,$location,assessors,$routeParams,regionManager) {
 
     $scope.assessorsList = [];
 
@@ -32,7 +32,7 @@ angular.module('dashboardApp')
 
     $scope.loadAssessors = function(){
         $scope.id = $routeParams.id;
-
+        console.log("loading region");
         regionManager.getActive($scope.id)
         .then(function(data){
             angular.copy(data,$scope.company);
@@ -46,7 +46,7 @@ angular.module('dashboardApp')
                 console.log(error);
             });
         })
-        .catch(function(data){
+        .catch(function(error){
             //$location.path("/");
         });
     }
@@ -62,13 +62,6 @@ angular.module('dashboardApp')
 
         assessors.post($scope.assessor)
             .then(function(data){
-                assessorsAndroid.post($scope.assessor)
-                    .then(function(data){
-                        console.log(data);
-                    })
-                    .catch(function(error){
-                        console.log(error);
-                    });
                 $('#myModal').modal('hide');//hide modal
                 $scope.loadAssessors();
             })
@@ -117,6 +110,7 @@ angular.module('dashboardApp')
                     })
                     .catch(function(data){
                         console.log(data);
+                        $scope.loadAssessors();
                     });
         } else {
             r = "You pressed Cancel!";

@@ -5,11 +5,18 @@
 'use strict';
 
 angular.module('dashboardApp')
-    .controller('reportCtrl', function ($scope,Sessions,$routeParams,regionManager,signIn) {
+    .controller('reportCtrl', function ($scope,Sessions,$routeParams,regionManager,signIn,reportInformationAndroid) {
         $scope.sessions = [];
         $scope.counterIphoneUsers = 0;
         $scope.countAssessor = 0;
         $scope.countManager = 0;
+
+        $scope.android ={
+            sessions:0,
+            assessors:0,
+            managers:0,
+            totalUsers:0
+        }
 
         $scope.loadInformation = function(){
             $scope.id = $routeParams.id;
@@ -50,6 +57,16 @@ angular.module('dashboardApp')
                 .catch(function(data){
                     console.log(data)
                 });
+
+                reportInformationAndroid.get({region: $scope.company.region})
+                .$promise
+                .then(function(data){
+                    angular.copy(data,$scope.android); console.log(data);
+
+                })
+                .catch(function(error){
+                    console.log(error);
+                })
 
             })
             .catch(function(data){

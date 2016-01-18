@@ -1,7 +1,8 @@
 {
     "name": "jhonny/dashboard",
     "require": {
-        "slim/slim": "2.*"
+        "slim/slim": "2.*",
+        "parse/php-sdk" : "1.1.*"
     },
     "authors": [
         {

@@ -6,7 +6,7 @@
  */
 
 angular.module('dashboardApp')
-    .factory('signIn', function ($q) {
+    .factory('signIn', function ($q,signInAndroid,reportInformationAndroid) {
         return {
          get: function(login,password){
              var deferred = $q.defer();
@@ -15,9 +15,17 @@ angular.module('dashboardApp')
                     // Do stuff after successful login.
                         deferred.resolve(user);
                   },
-                  error: function(user, error) {
+                  error: function(user1, error) {
                     // The login failed. Check error to see why.
-                        deferred.reject(error);
+                       signInAndroid.get({login:login,password:password})
+                       .$promise
+                        .then(function(user){
+                           deferred.resolve(user);
+                        })
+                       .catch(function(error){
+                           deferred.reject(error);
+                       });
+
                   }
                 });
              return deferred.promise;

@@ -5,68 +5,80 @@
 'use strict';
 
 angular.module('dashboardApp')
-    .controller('mainCtrl', function ($scope,$location,signIn,actualUserAndroid,currentUserAndroid) {
+    .controller('mainCtrl', function ($scope,$location,signIn,$rootScope,$cookies) {
+        var applicationId ="";
+        var javascriptKey ="";
+        $rootScope.platform = "";
+        $scope.company = {};
+        $scope.actualUserLabel = "";
+        $rootScope.myUser = {};//actual user in session
+        $scope.createLabel = "Create";
+        $rootScope.titleLogin ="";
 
-    //Parse.initialize("0PFoPjr5G4LTn82O6Cz2EwwzBJhDtvJuCpQy6dd7", "jezYGz4N2YgwgauGxv5e8ptR8ckfqqAx3NpocYgC");//test
-    Parse.initialize("6G4jVxScRgDj6kKv8tcrPv21s3px6ugLGMYkURpr", "9xyK9Ci6IDT5TOaevK7WwFdbfN6YFyeF9duX1I6d");//production
-    $scope.company = {};
-    
-    $scope.actualUserLabel = "";
-    $scope.myUser = {};//actual user in session
-    $scope.createLabel = "Create";
+        $scope.initParse = function(){
+			$cookies.put('parseUser', $rootScope.platform );
+            Parse.initialize(applicationId, javascriptKey);
+        };
 
-    $scope.logout = function(){
-        Parse.User.logOut();
-        $location.path("");
-    }
-
-    $scope.getActualUser = function(){
-        var currentUser = Parse.User.current();//get the current user with parse
-        if (currentUser) {
-            signIn.getActualUser(currentUser.id)
-            .then(function(data){
-                $scope.actualUserLabel = data[0].get('username');
-                angular.copy({'username':data[0].get('username'),
-                              'password':data[0].get('uncrypt_password'),
-                              'id': data[0].id,
-                              'designation':data[0].get('designation')},$scope.myUser);
-
-                $scope.redirectUser();
-            })
-            .catch(function(error){
-            });
-        } else {// if the user is not in ios parse, the app verify in android parse
-            currentUserAndroid.get()
-            .$promise
-            .then(function(data){ console.log(data.id);
-                actualUserAndroid.get({"id":data.id})
-                .$promise
-                .then(function(data){
-                    $scope.actualUserLabel = data.username;
-                    angular.copy({'username':data.username,
-                                  'password':data.uncrypt_password,
-                                  'id': data.id,
-                                  'designation':data.designation},$scope.myUser);
-
-                    $scope.redirectUser();
-                })
-                .catch(function(error){
-                })
-            })
-
+        $scope.logout = function(){
+            Parse.User.logOut();
+            $location.path("");
         }
-    }
 
-
-    $scope.redirectUser = function(){ console.log($scope.myUser.designation);
-        if($scope.myUser.designation == 'region_manager' || $scope.myUser.designation == 'manager'
-          || $scope.myUser.designation == 'Regional_Manager' || $scope.myUser.designation == 'Manager'){//Android parse work with upper case
-            $location.path("users/" +  $scope.myUser.id);
-            console.log("entro " + $scope.myUser.id)
-        } else if($scope.myUser.designation == 'admin' || $scope.myUser.designation == 'superadmin'
-                 || $scope.myUser.designation == 'Admin' || $scope.myUser.designation == 'Super_Admin'){//Android parse work with upper case
-            $location.path("companies");
+        $scope.getActualUser = function(){
+			if($cookies.get('parseUser') !== null){
+				$scope.changeDashboard($cookies.get('parseUser')) ;
+			  	$scope.initParse();
+				var currentUser = Parse.User.current();//get the current user with parse
+				if (currentUser) {
+					signIn.getActualUser(currentUser.id)
+					.then(function(data){
+						$scope.actualUserLabel = data[0].get('username');
+						angular.copy({'username':data[0].get('username'),
+									  'password':data[0].get('uncrypt_password'),
+									  'id': data[0].id,
+									  'designation':data[0].get('designation')},$rootScope.myUser);
+						 if($rootScope.platform == "ios")
+							 $rootScope.myUser.designation = data[0].get('designation');
+						 else if($rootScope.platform == "android")
+							 $rootScope.myUser.designation = data[0].get('Designation');
+						$scope.redirectUser();
+					})
+					.catch(function(error){
+					});
+				}
+			}
+			else{
+            	$location.path("");
+			}
         }
-    }
+
+
+        $scope.redirectUser = function(){
+            if($rootScope.myUser.designation == 'region_manager' || $rootScope.myUser.designation == 'manager'
+              || $rootScope.myUser.designation == 'Regional_Manager' || $rootScope.myUser.designation == 'Manager'){//Android parse work with upper case
+                $location.path("users/" +  $scope.myUser.id);
+                console.log("entro " + $scope.myUser.id)
+            } else if($rootScope.myUser.designation == 'admin' || $rootScope.myUser.designation == 'superadmin'
+                     || $rootScope.myUser.designation == 'Admin' || $rootScope.myUser.designation == 'Super_Admin'){//Android parse work with upper case
+                $location.path("companies");
+            }
+        }
+
+        $scope.changeDashboard = function(title){
+                $rootScope.titleLogin = title + " Dashboard";
+                if(title == 'iOS' || title == 'ios'){
+                    applicationId ="6G4jVxScRgDj6kKv8tcrPv21s3px6ugLGMYkURpr";
+                    javascriptKey ="9xyK9Ci6IDT5TOaevK7WwFdbfN6YFyeF9duX1I6d";
+                    $rootScope.platform = 'ios';
+
+                }
+                else if(title == 'Android' || title == 'android'){
+                    applicationId ="ZrANjzvLT79i49LbEjGslE6KZkJzhSgtBZZpsP6u";
+                    javascriptKey ="AM4vLyoJAYvgQkU21zcwbjwI0JmUxGXTTJiohX8u";
+                    $rootScope.platform = 'android';
+                }
+            }
+
     
     });

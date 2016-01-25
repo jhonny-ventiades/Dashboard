@@ -16,11 +16,11 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
          <a href="" class="btn btn-danger navbar-btn navbar-right" ng-click="logout()">Logout</a>
-          <ul class="nav navbar-nav navbar-right">
+          <!--<ul class="nav navbar-nav navbar-right">
             <li ng-click="actionCreate()"><a href="#" class="text-primary" style="color:blue !important" data-toggle="modal" data-target="#myModal">
               <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
                  Print</a></li>
-          </ul>
+          </ul>-->
         </div><!-- /.navbar-collapse -->
 
     </div>
@@ -58,31 +58,39 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Number of sessions:</td>
-                        <td><strong>{{sessions.length + android.sessions}}</strong></td>
-                    </tr>
-                    <tr>
-                        <td>Android User:</td>
-                        <td><strong>{{android.totalUsers}}</strong></td>
-                    </tr>
-                    <tr>
-                        <td>IPhone User:</td>
-                        <td><strong>{{counterIphoneUsers}}</strong></td>
-                    </tr>
-                    <tr>
-                        <td>Number of orders completed:</td>
-                        <td><strong>{{sessions.length + android.sessions}}</strong></td>
-                    </tr>
-                    <tr>
                         <td colspan="2"> <h2>Users</h2></td>
+                    </tr>
+                     <tr>
+                        <th>Number total of users</th>
+                        <td>{{totalUsers}}</td>
                     </tr>
                     <tr>
                         <td>Managers</td>
-                        <td>{{countAssessor+  android.assessors}}</td>
+                        <td>{{countManager}}</td>
                     </tr>
                     <tr>
                         <td>Assessor</td>
-                        <td>{{countManager + android.managers}}</td>
+                        <td>{{countAssessor}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th colspan="3" class="text-center">User connections</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th class="text-center"> User</th>
+                        <th class="text-center">Designation</th>
+
+                        <th class="text-center">Last connection</th>
+                    </tr>
+                     <tr ng-repeat="session in sessions">
+                        <td>{{session.username}}</td>
+                        <td>{{session.designation}}</td>
+                        <td>{{session.lastConnection | date:"dd/MM/yyyy HH:mm"}}</td>
                     </tr>
                 </tbody>
             </table>

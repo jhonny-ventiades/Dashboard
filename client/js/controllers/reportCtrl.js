@@ -5,18 +5,12 @@
 'use strict';
 
 angular.module('dashboardApp')
-    .controller('reportCtrl', function ($scope,Sessions,$routeParams,regionManager,signIn,reportInformationAndroid) {
+    .controller('reportCtrl', function ($scope,Sessions,$routeParams,regionManager,signIn) {
         $scope.sessions = [];
-        $scope.counterIphoneUsers = 0;
+        $scope.totalUsers = 0;
         $scope.countAssessor = 0;
         $scope.countManager = 0;
 
-        $scope.android ={
-            sessions:0,
-            assessors:0,
-            managers:0,
-            totalUsers:0
-        }
 
         $scope.loadInformation = function(){
             $scope.id = $routeParams.id;
@@ -28,6 +22,7 @@ angular.module('dashboardApp')
                 Sessions.get($scope.company.region)
                 .then(function(data){
                     angular.copy(data,$scope.sessions);
+					console.log(data);
                 })
                 .catch(function(data){
                     console.log(data);
@@ -36,7 +31,7 @@ angular.module('dashboardApp')
 
                 signIn.countUsers($scope.company.region)
                 .then(function(data){
-                    $scope.counterIphoneUsers = data;
+                    $scope.totalUsers = data - 1;//reduce 1 because not count the regional manager
                 })
                 .catch(function(data){
                     console.log(data)
@@ -58,15 +53,6 @@ angular.module('dashboardApp')
                     console.log(data)
                 });
 
-                reportInformationAndroid.get({region: $scope.company.region})
-                .$promise
-                .then(function(data){
-                    angular.copy(data,$scope.android); console.log(data);
-
-                })
-                .catch(function(error){
-                    console.log(error);
-                })
 
             })
             .catch(function(data){

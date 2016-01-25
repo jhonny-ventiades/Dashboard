@@ -10,7 +10,8 @@
 
 angular.module('dashboardApp', [
     'ngResource',
-    'ngRoute'
+    'ngRoute',
+    'ngCookies'
 ])
     .config(function ($routeProvider, $locationProvider) {
         $routeProvider
@@ -37,15 +38,17 @@ angular.module('dashboardApp', [
     })
     .run(function($rootScope, $location) {
         $rootScope.$on('$routeChangeStart', function (event, next, current,$scope) {
+            //if(Parse.User == null) $location.path('/');
             var currentUser = Parse.User.current();//get the current user with parse
             if (next.templateUrl == 'client/views/partials/companies.html'
                 || next.templateUrl == 'client/views/partials/users.html') {
-             /*   if (!currentUser) {// if there are no users connected
+                if (!currentUser) {// if there are no users connected
                     $location.path('/');
-                }*/
+                }
             }
 
             else if(next.templateUrl == 'client/views/partials/main.html'){
+                var currentUser = Parse.User.current();//get the current user with parse
                 if (currentUser) {
                     $location.path('/companies');
                 }

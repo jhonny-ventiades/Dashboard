@@ -1,29 +1,14 @@
 
 
-<div class="row" ng-init="title = ''">
+<div class="row">
     <div class="col-xs-12 text-center">
         <h1 class="text-primary"><b>WAMITAB</b><br><small>Dashboard</small></h1>
     </div>
 </div>
 <div class="row">
-    <div class="col-xs-12 col-lg-offset-3 col-lg-6
-                          col-md-offset-3 col-md-6
-                          col-sm-offset-2 col-sm-8 text-center" >
-       <a href="" class="img-circle col-xs-4 " style="background-color:#f1f1f1;  padding:20px;border: solid 5px #fff"
-           ng-click="changeDashboard('Android')">
-            <img src="client/images/android.png" class="img-responsive"  data-toggle="modal" data-target="#myModal"/>
-        </a>
-        <a href="" class="img-circle col-xs-4 " style="background-color:#f1f1f1;  padding:20px;border: solid 5px #fff"
-           ng-click="changeDashboard('iOS')">
-            <img src="client/images/ios.png" class="img-responsive" data-toggle="modal" data-target="#myModal"/>
-        </a>
-       <a href="" class="img-circle col-xs-4 " style="background-color:#f1f1f1; padding:20px;border: solid 5px #fff"
-           ng-click="changeDashboard('Windows Phone')">
-            <img src="client/images/windows.png" class="img-responsive" data-toggle="modal" data-target="#myModal"/>
-        </a>
-
-        <!--<button class="btn btn-success btn-lg" type="button"
-        data-toggle="modal" data-target="#myModal">Sign In</button>-->
+    <div class="col-xs-12 text-center">
+        <button class="btn btn-success btn-lg" type="button"  
+        data-toggle="modal" data-target="#myModal">Sign In</button>
     </div>
 </div>
 
@@ -35,7 +20,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">SignIn: <span class="text-primary">{{titleLogin}}</span></h4>
+        <h4 class="modal-title" id="myModalLabel">Sign In</h4>
       </div>
       
       <form class="form-horizontal" name="signInForm" novalidate>            
@@ -57,13 +42,8 @@
             </div>
       </div>      
       <div class="modal-footer">
-      		<div ng-if="!showAlertProcessSignIn">
-        		<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        		<button type="button" class="btn btn-success" ng-click="signIn()" ng-disabled="signInForm.$invalid">Sign in</button>
-		    </div>
-		   <div  ng-if="showAlertProcessSignIn" >
-				<img src="client/images/loading.gif" class="center-block img-responsive" width=80px>
-		   </div>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-success" ng-click="signIn()" ng-disabled="signInForm.$invalid">Sign in</button>        
       </div>
       </form>
     </div>

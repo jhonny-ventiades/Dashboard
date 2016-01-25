@@ -7,10 +7,9 @@
 angular.module('dashboardApp')
     .controller('reportCtrl', function ($scope,Sessions,$routeParams,regionManager,signIn) {
         $scope.sessions = [];
-        $scope.totalUsers = 0;
+        $scope.counterIphoneUsers = 0;
         $scope.countAssessor = 0;
         $scope.countManager = 0;
-
 
         $scope.loadInformation = function(){
             $scope.id = $routeParams.id;
@@ -22,7 +21,6 @@ angular.module('dashboardApp')
                 Sessions.get($scope.company.region)
                 .then(function(data){
                     angular.copy(data,$scope.sessions);
-					console.log(data);
                 })
                 .catch(function(data){
                     console.log(data);
@@ -31,7 +29,7 @@ angular.module('dashboardApp')
 
                 signIn.countUsers($scope.company.region)
                 .then(function(data){
-                    $scope.totalUsers = data - 1;//reduce 1 because not count the regional manager
+                    $scope.counterIphoneUsers = data;
                 })
                 .catch(function(data){
                     console.log(data)
@@ -52,7 +50,6 @@ angular.module('dashboardApp')
                 .catch(function(data){
                     console.log(data)
                 });
-
 
             })
             .catch(function(data){

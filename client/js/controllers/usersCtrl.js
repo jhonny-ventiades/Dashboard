@@ -5,7 +5,7 @@
 'use strict';
 
 angular.module('dashboardApp')
-    .controller('usersCtrl', function ($scope,$location,assessors,$routeParams,regionManager) {
+    .controller('usersCtrl', function ($scope,$location,assessors,$routeParams,regionManager,assessorsAndroid) {
 
     $scope.assessorsList = [];
 
@@ -22,9 +22,6 @@ angular.module('dashboardApp')
         company_name:""
     }
 
-	$scope.showAlertProcessCreateAssessor = false;
-	$scope.showAlertProcessEditAssessor = false;
-
     $scope.assessorEdit = {};
 
     $scope.errorExistingEmail = false;
@@ -35,6 +32,7 @@ angular.module('dashboardApp')
 
     $scope.loadAssessors = function(){
         $scope.id = $routeParams.id;
+
         regionManager.getActive($scope.id)
         .then(function(data){
             angular.copy(data,$scope.company);
@@ -48,13 +46,13 @@ angular.module('dashboardApp')
                 console.log(error);
             });
         })
-        .catch(function(error){
+        .catch(function(data){
             //$location.path("/");
         });
     }
 
     $scope.createAssessor = function(){
-		$scope.showAlertProcessCreateAssessor = true;
+
         $scope.assessor.email = $scope.assessor.username;
         $scope.assessor.region = $scope.company.region;
         $scope.assessor.phone = $scope.company.phone;
@@ -64,12 +62,17 @@ angular.module('dashboardApp')
 
         assessors.post($scope.assessor)
             .then(function(data){
-				$scope.showAlertProcessCreateAssessor = false;
+                assessorsAndroid.post($scope.assessor)
+                    .then(function(data){
+                        console.log(data);
+                    })
+                    .catch(function(error){
+                        console.log(error);
+                    });
                 $('#myModal').modal('hide');//hide modal
                 $scope.loadAssessors();
             })
             .catch(function(error){
-				$scope.showAlertProcessCreateAssessor = false;
                 if(error.code == 202){
                     $("#emailAssessorTextBox").focus();
                     $scope.errorExistingEmail = true;
@@ -89,16 +92,13 @@ angular.module('dashboardApp')
     $scope.editAssessor = function(){
         $scope.assessorEdit.email = $scope.assessorEdit.username;
 
-		$scope.showAlertProcessEditAssessor = true;
-        assessors.update($scope.assessorEdit)
+        assessors.update($scope.assessorEdit,$scope.myUser)
             .then(function(data){
-				$scope.showAlertProcessEditAssessor = false;
                 $('#editModal').modal('hide');//hide modal
                 $scope.loadAssessors();
                 $scope.assessorEdit = {};
             })
             .catch(function(data){
-				$scope.showAlertProcessEditAssessor = false;
                 if(data.code==202){
                     $("#emailAssessorTextBox").focus();
                     $scope.errorExistingEmail = true;
@@ -117,7 +117,6 @@ angular.module('dashboardApp')
                     })
                     .catch(function(data){
                         console.log(data);
-                        $scope.loadAssessors();
                     });
         } else {
             r = "You pressed Cancel!";

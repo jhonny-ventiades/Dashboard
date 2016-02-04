@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-<div ng-include="'client/views/partials/header.html'" ></div>
-=======
 <nav class="navbar navbar-default" style="border-radius:0" >
     <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -29,11 +26,10 @@
     </div>
 </nav>
 
->>>>>>> origin/analitycs
 
 
 
-<div class="container" ng-init="loadInformation()" >
+<div class="container" ng-init="loadInformation()">
     <div class="col-xs-12 columns">
         <div class="paper">
             <!--<div class="text-center">
@@ -54,42 +50,20 @@
                 <li>2 Regional Managers</li>
                 <li>10 Assessors</li>
             </ul>-->
-            <div class="col-xs-12 text-center title">
-            	<h1>Report</h1>
-            </div>
             <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <td colspan="2" class="text-center"> <h2>Users</h2></td>
+                        <td colspan="2" class="text-center"> <h1>Report</h1></td>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-<<<<<<< HEAD
-                    	<td colspan="2">
-							<div  ng-if="showAlertProcessUsers" class=" col-xs-12 center-block" >
-									<img src="client/images/loading.gif" class="center-block img-responsive" width=150px>
-							</div>
-							<div class="col-xs-8" >
-								<canvas id="myChart" width="300" height="300" class="center-block"></canvas>
-							</div>
-							<div class="col-xs-4" style="magin-top:50px !important">
-								<div id="js-legend" class="chart-legend center-block"></div>
-							</div>
-						</td>
-=======
                         <td>Number of sessions:</td>
                         <td><strong>{{sessions.length}}</strong></td>
->>>>>>> origin/analitycs
                     </tr>
                     <tr>
                         <td>Android User:</td>
                         <td><strong>{{counterIphoneUsers}}</strong></td>
-                    </tr>
-
-                    <tr>
-                        <td>Regional Manager</td>
-                        <td>1</td>
                     </tr>
                     <tr>
                         <td>IPhone User:</td>
@@ -100,69 +74,20 @@
                         <td><strong>{{sessions.length}}</strong></td>
                     </tr>
                     <tr>
-<<<<<<< HEAD
-                        <td colspan="4" class="text-center"> <h2>AUDITS</h2></td>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                    	<td colspan="4">
-                    	<div  ng-if="showAlertProcessAudits" class=" col-xs-12 center-block" >
-								<img src="client/images/loading.gif" class="center-block img-responsive" width=150px>
-						</div>
-                    	<div class="col-xs-8" >
-							<canvas id="myChartAudits" width="400" height="300" class="center-block"></canvas>
-						</div>
-						<div class="col-xs-4" style="magin-top:50px !important">
-							<div id="js-legend-audits" class="chart-legend center-block"></div>
-						</div>
-						</td>
-                    </tr>
-                    <tr>
-                        <th class="text-center">User</th>
-                        <th class="text-center"># Pending</th>
-                        <th class="text-center"># Completed</th>
-                    </tr>
-                     <tr ng-repeat="audit in audits">
-                        <td>{{audit.username}}</td>
-                        <td>{{audit.pending}}</td>
-                        <td>{{audit.completed}}</td>
-                    </tr>
-                </tbody>
-            </table>
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <td colspan="4" class="text-center"> <h2>CONNECTIONS</h2></td>
-=======
                         <td colspan="2"> <h2>Users</h2></td>
->>>>>>> origin/analitycs
                     </tr>
                     <tr>
-<<<<<<< HEAD
-                        <th class="text-center"> User</th>
-                        <th class="text-center">Designation</th>
-                        <th class="text-center">Actual connection</th>
-                        <th class="text-center">Type of connection</th>
-                    </tr>
-                     <tr ng-repeat="session in sessions">
-                        <td>{{session.username}}</td>
-                        <td>{{session.designation}}</td>
-                        <td>{{session.lastConnection | date:"dd/MM/yyyy HH:mm"}}</td>
-                        <td>{{session.type | date:"dd/MM/yyyy HH:mm"}}</td>
-=======
                         <td>Managers</td>
                         <td>{{countAssessor}}</td>
                     </tr>
                     <tr>
                         <td>Assessor</td>
                         <td>{{countManager}}</td>
->>>>>>> origin/analitycs
                     </tr>
                 </tbody>
             </table>
         </div>
-        <a class="btn btn-primary hidden-print center-block" onclick="printReport()" style="margin-bottom:100px">
+        <a class="btn btn-primary hidden-print center-block" onclick="printReport()" >
             Print
         </a>
     </div>

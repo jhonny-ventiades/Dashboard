@@ -1,5 +1,62 @@
 
+<div class="container">
+	<div class="row" ng-init="title = ''">
+		<div class="col-xs-12 text-center" style="margin-top:30px">
+		   <img src="client/images/logo.png" class="img-responsive center-block" />
+			<h1 class="principal_title">DASHBOARD</h1>
+		</div>
+	</div>
+	<div class="row" id="platformsButtons">
+		<div class="col-xs-12 col-lg-offset-3 col-lg-6
+							  col-md-offset-3 col-md-6
+							  col-sm-offset-2 col-sm-8 text-center" >
+		   <a href="" class="img-circle col-xs-4 circles-main" ng-click="changeDashboard('Android'); showLoginLayout()">
+				<img src="client/images/android.png" class="img-responsive center-block" />
+			</a>
+			<a href="" class="img-circle col-xs-4 circles-main"  ng-click="changeDashboard('iOS');showLoginLayout()">
+				<img src="client/images/ios.png" class="img-responsive  center-block"/>
+			</a>
+		   <a href="" class="img-circle col-xs-4 circles-main" ng-click="changeDashboard('Windows Phone');showLoginLayout()">
+				<img src="client/images/windows.png" class="img-responsive  center-block" />
+			</a>
 
+<<<<<<< HEAD
+			<!--<button class="btn btn-success btn-lg" type="button"
+			data-toggle="modal" data-target="#myModal">Sign In</button>-->
+		</div>
+	</div>
+	<div id="loginLayout" class="container" id="collapseExample" style="display:none">
+		<div class="col-xs-12 col-lg-offset-3 col-lg-6
+							  col-md-offset-3 col-md-6
+							  col-sm-offset-2 col-sm-8 text-center" ng-controller="signInCtrl">
+			<h3 class="text-center" id="myModalLabel">SignIn: <span class="text-primary">{{titleLogin}}</span></h3>
+			<form class="form-horizontal" name="signInForm" novalidate>
+				<div class="form-group">
+					<div class="col-sm-12">
+						<input type="text" class="form-control" id="inputEmail3" ng-model="user.login" placeholder="Login" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-12">
+						<input type="password" class="form-control" id="inputPassword3" ng-model="user.password" placeholder="Password" required>
+					</div>
+				</div>
+				<div class="alert alert-danger" role="alert" ng-if="errorSignIn">
+					<strong>Error!</strong>, Wrong values. Try Again.
+				</div>
+			<div class="text-center">
+				<div ng-if="!showAlertProcessSignIn">
+					<button type="button" class="btn btn-default btn-lg col-xs-6" ng-click="hideLoginLayout()">Cancel</button>
+					<button type="button" class="btn btn-success btn-lg col-xs-6" ng-click="signIn()" ng-disabled="signInForm.$invalid">Sign in</button>
+				</div>
+			   <div  ng-if="showAlertProcessSignIn" >
+					<img src="client/images/loading.gif" class="center-block img-responsive" width=80px>
+			   </div>
+			</div>
+			</form>
+		</div>
+	</div>
+=======
 <div class="row">
     <div class="col-xs-12 text-center">
         <h1 class="text-primary"><b>WAMITAB</b><br><small>Dashboard</small></h1>
@@ -7,15 +64,16 @@
 </div>
 <div class="row">
     <div class="col-xs-12 text-center">
-        <button class="btn btn-success btn-lg" type="button"  
+        <button class="btn btn-success btn-lg" type="button"
         data-toggle="modal" data-target="#myModal">Sign In</button>
     </div>
+>>>>>>> origin/analitycs
 </div>
 
 
 
 <!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
+<!--<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
   <div class="modal-dialog" role="document" ng-controller="signInCtrl">
     <div class="modal-content">
       <div class="modal-header">
@@ -43,13 +101,12 @@
       </div>      
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-success" ng-click="signIn()" ng-disabled="signInForm.$invalid">Sign in</button>        
+        <button type="button" class="btn btn-success" ng-click="signIn()" ng-disabled="signInForm.$invalid">Sign in</button>
       </div>
       </form>
     </div>
   </div>
-</div>
-
+</div>-->
 
 
 

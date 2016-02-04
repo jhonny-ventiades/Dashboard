@@ -7,6 +7,7 @@
 angular.module('dashboardApp')
     .controller('reportCtrl', function ($scope,Sessions,$routeParams,regionManager,signIn,Audits) {
         $scope.sessions = [];
+<<<<<<< HEAD
 		$scope.audits = [];
 		$scope.dataAudits = [0,0,0,0,0,0,0,0,0,0,0,0];// for the graphics, a vector with every month
 		$scope.dataAuditsPending = [0,0,0,0,0,0,0,0,0,0,0,0];
@@ -15,6 +16,11 @@ angular.module('dashboardApp')
         $scope.countManager = 0;
 		$scope.showAlertProcessUsers = true;
 		$scope.showAlertProcessAudits = true;
+=======
+        $scope.counterIphoneUsers = 0;
+        $scope.countAssessor = 0;
+        $scope.countManager = 0;
+>>>>>>> origin/analitycs
 
         $scope.loadInformation = function(){
             $scope.id = $routeParams.id;
@@ -27,7 +33,6 @@ angular.module('dashboardApp')
                 Sessions.get($scope.company.region)
                 .then(function(data){
                     angular.copy(data,$scope.sessions);
-					console.log(data);
                 })
                 .catch(function(data){
                     console.log(data);
@@ -105,7 +110,15 @@ angular.module('dashboardApp')
 
                 signIn.countUsers($scope.company.region)
                 .then(function(data){
+<<<<<<< HEAD
                     $scope.totalUsers = data - 1;//reduce 1 because not count the regional manager
+=======
+                    $scope.counterIphoneUsers = data;
+                })
+                .catch(function(data){
+                    console.log(data)
+                });
+>>>>>>> origin/analitycs
 
 					signIn.countAssessor($scope.company.region)
 					.then(function(data){
@@ -132,7 +145,6 @@ angular.module('dashboardApp')
 				.catch(function(data){
 					console.log(data)
 				});
-
 
             })
             .catch(function(data){

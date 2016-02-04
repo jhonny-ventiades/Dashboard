@@ -6,10 +6,11 @@
  */
 
 angular.module('dashboardApp')
-    .factory('Sessions', function ($q,$window,$rootScope) {
+    .factory('Sessions', function ($q,$window) {
         return {
          get: function(region){
             var deferred = $q.defer();
+<<<<<<< HEAD
 			Parse.Cloud.run('getSessions', {region:region}, {
 			  success: function(data) {
 				  // the user was updated successfully
@@ -79,8 +80,23 @@ angular.module('dashboardApp')
 							});
 						//}
 					}
+=======
+            var results = [];
+
+            var User = Parse.Object.extend("_User");
+            var queryUser = new Parse.Query(User);
+            queryUser.equalTo("region",region);
+
+            var Sessions = Parse.Object.extend("_Session");
+            var query = new Parse.Query(Sessions);
+            query.include("user");
+            query.matchesQuery("user",queryUser);
+            //query.equalTo("user.region",region);
+            query.find({
+                success: function (data) {
+>>>>>>> origin/analitycs
                     //angular.copy(data,results);
-                    deferred.resolve(toReturn);
+                    deferred.resolve(data);
                 },
                 error: function (error) {
                   deferred.reject(error);

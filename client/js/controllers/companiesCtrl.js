@@ -27,6 +27,7 @@ angular.module('dashboardApp')
     $scope.errorSameRegion = false;
     $scope.regionsLoaded = false;
     $scope.errorExistingEmail = false;
+<<<<<<< HEAD
 	$scope.showAlertProcessCreateCompany = false;
 	$scope.showAlertProcessEditCompany = false;
 	$scope.showAlertUserAnalytics = false;
@@ -34,6 +35,9 @@ angular.module('dashboardApp')
     $scope.totalAssesors = 0;
 	$scope.totalManagers = 0;
 
+=======
+
+>>>>>>> origin/analitycs
     $scope.selectCompany = function(){
         $location.path("company");
     }
@@ -87,14 +91,12 @@ angular.module('dashboardApp')
 
     $scope.createRegionManager = function(){
         $scope.regionManager.email = $scope.regionManager.username;
-		$scope.showAlertProcessCreateCompany = true;
         regionManager.validateRegion($scope.regionManager.region)
             .then(function(data){
             // validate if there are no other fields with the same region
             if(data.length <= 0){
                 regionManager.post($scope.regionManager)
                     .then(function(data){
-						$scope.showAlertProcessCreateCompany = false;
                         $('#myModal').modal('hide');//hide modal
                         $scope.loadRegionalManagersList();
                         $scope.errorExistingEmail = false;
@@ -113,7 +115,6 @@ angular.module('dashboardApp')
 
                     })
                     .catch(function(data){
-						$scope.showAlertProcessCreateCompany = false;
                         if(data.code==202){
                             $("#emailTextBox").focus();
                             $scope.errorExistingEmail = true;
@@ -155,7 +156,6 @@ angular.module('dashboardApp')
 
     $scope.editRegionManager = function(){
         $scope.regionManagerEdit.email = $scope.regionManagerEdit.username;
-		$scope.showAlertProcessEditCompany = true;
         regionManager.validateRegion($scope.regionManagerEdit.region)
         .then(function(data){
             // validate if there are no other fields with the same region
@@ -172,9 +172,8 @@ angular.module('dashboardApp')
             }
 
             if(flag == true){
-                regionManager.update($scope.regionManagerEdit)
+                regionManager.update($scope.regionManagerEdit,$scope.myUser)
                     .then(function(data){
-						$scope.showAlertProcessEditCompany = false;
                         $('#editModal').modal('hide');//hide modal
                         $scope.loadRegionalManagersList();
                         $scope.regionManagerEdit = {};
@@ -187,19 +186,18 @@ angular.module('dashboardApp')
                     });
             }
             else{
-				$scope.showAlertProcessEditCompany = false;
                 $scope.errorSameRegion = true;
             }
         })
         .catch(function(data){
-				$scope.showAlertProcessEditCompany = false;
+
         });
     }
 
-    $scope.deleteRegionManager = function(manager){ console.log(manager);
+    $scope.deleteRegionManager = function(manager){
         var r = confirm("Are you sure to delete this user?");
         if (r == true) {
-             regionManager.delete(manager)
+             regionManager.delete(manager,$scope.myUser)
                     .then(function(data){
                         $scope.loadRegionalManagersList();
                         $scope.getActualUser();

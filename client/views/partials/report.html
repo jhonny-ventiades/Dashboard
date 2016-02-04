@@ -1,4 +1,35 @@
+<<<<<<< HEAD
 <div ng-include="'client/views/partials/header.html'" ></div>
+=======
+<nav class="navbar navbar-default" style="border-radius:0" >
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">
+              Wamitab Dashboard/<span class="text-primary">{{actualUserLabel}}</span>
+          </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+         <a href="" class="btn btn-danger navbar-btn navbar-right" ng-click="logout()">Logout</a>
+          <ul class="nav navbar-nav navbar-right">
+            <li ng-click="actionCreate()"><a href="#" class="text-primary" style="color:blue !important" data-toggle="modal" data-target="#myModal">
+              <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
+                 Print</a></li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+
+    </div>
+</nav>
+
+>>>>>>> origin/analitycs
 
 
 
@@ -34,6 +65,7 @@
                 </thead>
                 <tbody>
                     <tr>
+<<<<<<< HEAD
                     	<td colspan="2">
 							<div  ng-if="showAlertProcessUsers" class=" col-xs-12 center-block" >
 									<img src="client/images/loading.gif" class="center-block img-responsive" width=150px>
@@ -45,10 +77,14 @@
 								<div id="js-legend" class="chart-legend center-block"></div>
 							</div>
 						</td>
+=======
+                        <td>Number of sessions:</td>
+                        <td><strong>{{sessions.length}}</strong></td>
+>>>>>>> origin/analitycs
                     </tr>
-                     <tr>
-                        <th>Number total of users</th>
-                        <td>{{totalUsers}}</td>
+                    <tr>
+                        <td>Android User:</td>
+                        <td><strong>{{counterIphoneUsers}}</strong></td>
                     </tr>
 
                     <tr>
@@ -56,18 +92,15 @@
                         <td>1</td>
                     </tr>
                     <tr>
-                        <td>Managers</td>
-                        <td>{{countManager}}</td>
+                        <td>IPhone User:</td>
+                        <td><strong>{{counterIphoneUsers}}</strong></td>
                     </tr>
                     <tr>
-                        <td>Assessor</td>
-                        <td>{{countAssessor}}</td>
+                        <td>Number of orders completed:</td>
+                        <td><strong>{{sessions.length}}</strong></td>
                     </tr>
-                </tbody>
-            </table>
-            <table class="table table-bordered">
-                <thead>
                     <tr>
+<<<<<<< HEAD
                         <td colspan="4" class="text-center"> <h2>AUDITS</h2></td>
                     </tr>
                 </thead>
@@ -101,10 +134,12 @@
                 <thead>
                     <tr>
                         <td colspan="4" class="text-center"> <h2>CONNECTIONS</h2></td>
+=======
+                        <td colspan="2"> <h2>Users</h2></td>
+>>>>>>> origin/analitycs
                     </tr>
-                </thead>
-                <tbody>
                     <tr>
+<<<<<<< HEAD
                         <th class="text-center"> User</th>
                         <th class="text-center">Designation</th>
                         <th class="text-center">Actual connection</th>
@@ -115,6 +150,14 @@
                         <td>{{session.designation}}</td>
                         <td>{{session.lastConnection | date:"dd/MM/yyyy HH:mm"}}</td>
                         <td>{{session.type | date:"dd/MM/yyyy HH:mm"}}</td>
+=======
+                        <td>Managers</td>
+                        <td>{{countAssessor}}</td>
+                    </tr>
+                    <tr>
+                        <td>Assessor</td>
+                        <td>{{countManager}}</td>
+>>>>>>> origin/analitycs
                     </tr>
                 </tbody>
             </table>

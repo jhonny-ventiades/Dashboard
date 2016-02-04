@@ -101,6 +101,54 @@ angular.module('dashboardApp')
               }
             });
             return deferred.promise;
-        }
+        },
+		countAllRegions: function(){
+            var deferred = $q.defer();
+            var query = new Parse.Query(Parse.User);
+            query.count({
+              success: function(count) {
+                // The count request succeeded. Show the count
+                deferred.resolve(count);
+              },
+              error: function(error) {
+                // The request failed
+                deferred.resolve(error);
+                  console.log(error)
+              }
+            });
+            return deferred.promise;
+        },
+		countAllManagers: function(region){
+            var deferred = $q.defer();
+            var query = new Parse.Query(Parse.User);
+            query.count({
+              success: function(count) {
+                // The count request succeeded. Show the count
+                deferred.resolve(count);
+              },
+              error: function(error) {
+                // The request failed
+                deferred.resolve(error);
+                  console.log(error)
+              }
+            });
+            return deferred.promise;
+        },
+        countAllAssessors: function(region){
+            var deferred = $q.defer();
+            var query = new Parse.Query(Parse.User);
+            query.count({
+              success: function(count) {
+                // The count request succeeded. Show the count
+                deferred.resolve(count);
+              },
+              error: function(error) {
+                // The request failed
+                deferred.resolve(error);
+                  console.log(error)
+              }
+            });
+            return deferred.promise;
+        },
     }
 });

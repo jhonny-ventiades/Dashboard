@@ -1,8 +1,8 @@
 <div ng-include="'client/views/partials/header.html'"></div>
 
 <div class="container" ng-init="loadAssessors()">
-   <div class="row">
-       <h1>{{company.company_name}}</h1>
+   <div class="row title">
+       <h1>{{company.region}}</h1>
    </div>
     <div class="row">
         <div class="jumbotron" style="padding-top:10px; padding-bottom:10px">
@@ -10,7 +10,7 @@
             <p>
                 <address>
                     <strong>Regional Manager:</strong> {{company.username}}<br>
-                    <strong>Region:</strong> {{company.region}}<br>
+                    <!--<strong>Region:</strong> {{company.region}}<br>-->
                     <strong>Phone:</strong> {{company.phone}}<br>
                     <strong>Address:</strong> {{company.address}}<br>
                 </address>
@@ -28,7 +28,15 @@
     <div class="row"  ng-if="assessorLoaded">
         <div class="panel panel-default">
             <!-- Default panel contents -->
-            <div class="panel-heading"  style="margin-bottom:10px">Assesors assigned to this company</div>
+            <div class="panel-heading"  style="margin-bottom:10px">
+            Assesors assigned to this region
+
+				<a href="#" class="btn btn-success" data-toggle="modal" data-target="#myModal" style="float:right">
+					<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+					 {{createLabel}}
+				</a>
+
+            </div>
 
             <div class="alert alert-warning text-center" role="alert" ng-if="assessorsList.length == 0">
               <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>

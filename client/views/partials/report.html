@@ -1,35 +1,8 @@
-<nav class="navbar navbar-default" style="border-radius:0" >
-    <div class="container">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">
-              Wamitab Dashboard/<span class="text-primary">{{actualUserLabel}}</span>
-          </a>
-        </div>
-
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-         <a href="" class="btn btn-danger navbar-btn navbar-right" ng-click="logout()">Logout</a>
-          <!--<ul class="nav navbar-nav navbar-right">
-            <li ng-click="actionCreate()"><a href="#" class="text-primary" style="color:blue !important" data-toggle="modal" data-target="#myModal">
-              <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
-                 Print</a></li>
-          </ul>-->
-        </div><!-- /.navbar-collapse -->
-
-    </div>
-</nav>
+<div ng-include="'client/views/partials/header.html'" ></div>
 
 
 
-
-<div class="container" ng-init="loadInformation()">
+<div class="container" ng-init="loadInformation()" >
     <div class="col-xs-12 columns">
         <div class="paper">
             <!--<div class="text-center">
@@ -50,19 +23,37 @@
                 <li>2 Regional Managers</li>
                 <li>10 Assessors</li>
             </ul>-->
+            <div class="col-xs-12 text-center title">
+            	<h1>Report</h1>
+            </div>
             <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <td colspan="2" class="text-center"> <h1>Report</h1></td>
+                        <td colspan="2" class="text-center"> <h2>Users</h2></td>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td colspan="2"> <h2>Users</h2></td>
+                    	<td colspan="2">
+							<div  ng-if="showAlertProcessUsers" class=" col-xs-12 center-block" >
+									<img src="client/images/loading.gif" class="center-block img-responsive" width=150px>
+							</div>
+							<div class="col-xs-8" >
+								<canvas id="myChart" width="300" height="300" class="center-block"></canvas>
+							</div>
+							<div class="col-xs-4" style="magin-top:50px !important">
+								<div id="js-legend" class="chart-legend center-block"></div>
+							</div>
+						</td>
                     </tr>
                      <tr>
                         <th>Number total of users</th>
                         <td>{{totalUsers}}</td>
+                    </tr>
+
+                    <tr>
+                        <td>Regional Manager</td>
+                        <td>1</td>
                     </tr>
                     <tr>
                         <td>Managers</td>
@@ -77,25 +68,58 @@
             <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <th colspan="3" class="text-center">User connections</th>
+                        <td colspan="4" class="text-center"> <h2>AUDITS</h2></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                    	<td colspan="4">
+                    	<div  ng-if="showAlertProcessAudits" class=" col-xs-12 center-block" >
+								<img src="client/images/loading.gif" class="center-block img-responsive" width=150px>
+						</div>
+                    	<div class="col-xs-8" >
+							<canvas id="myChartAudits" width="400" height="300" class="center-block"></canvas>
+						</div>
+						<div class="col-xs-4" style="magin-top:50px !important">
+							<div id="js-legend-audits" class="chart-legend center-block"></div>
+						</div>
+						</td>
+                    </tr>
+                    <tr>
+                        <th class="text-center">User</th>
+                        <th class="text-center"># Pending</th>
+                        <th class="text-center"># Completed</th>
+                    </tr>
+                     <tr ng-repeat="audit in audits">
+                        <td>{{audit.username}}</td>
+                        <td>{{audit.pending}}</td>
+                        <td>{{audit.completed}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <td colspan="4" class="text-center"> <h2>CONNECTIONS</h2></td>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <th class="text-center"> User</th>
                         <th class="text-center">Designation</th>
-
-                        <th class="text-center">Last connection</th>
+                        <th class="text-center">Actual connection</th>
+                        <th class="text-center">Type of connection</th>
                     </tr>
                      <tr ng-repeat="session in sessions">
                         <td>{{session.username}}</td>
                         <td>{{session.designation}}</td>
                         <td>{{session.lastConnection | date:"dd/MM/yyyy HH:mm"}}</td>
+                        <td>{{session.type | date:"dd/MM/yyyy HH:mm"}}</td>
                     </tr>
                 </tbody>
             </table>
         </div>
-        <a class="btn btn-primary hidden-print center-block" onclick="printReport()" >
+        <a class="btn btn-primary hidden-print center-block" onclick="printReport()" style="margin-bottom:100px">
             Print
         </a>
     </div>

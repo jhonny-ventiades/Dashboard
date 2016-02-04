@@ -79,6 +79,19 @@ angular.module('dashboardApp')
                     $rootScope.platform = 'android';
                 }
             }
+		$scope.showLoginLayout = function(){
+			$("#platformsButtons").fadeOut(500);
+					setTimeout(function(){
+						$("#loginLayout").fadeIn(1000);
+					}, 500);
+		}
+
+		$scope.hideLoginLayout = function(){
+			$("#loginLayout").fadeOut(500);
+					setTimeout(function(){
+						$("#platformsButtons").fadeIn(1000);
+					}, 500);
+		}
 
     
     });

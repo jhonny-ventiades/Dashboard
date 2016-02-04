@@ -8,18 +8,24 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">
-              Wamitab Dashboard/<span class="text-primary">{{actualUserLabel}}</span>
+          <a class="navbar-brand" href="#" style="padding:5px !important">
+          	<img alt="Brand" src="client/images/appicon.png" style="width:40px">
           </a>
         </div>
+        <p class="navbar-text" style="font-size:18px; margin-bottom:10px">Wamitab Dashboard/<span class="text-primary">{{actualUserLabel}}</span></p>
+
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-         <a href="" class="btn btn-danger navbar-btn navbar-right" ng-click="logout()">Logout</a>
+         <!--<a href="" class="btn btn-danger navbar-btn navbar-right" ng-click="logout()">Logout</a>-->
           <ul class="nav navbar-nav navbar-right">
-            <li ng-click="actionCreate()"><a href="#" class="text-success" style="color:green !important" data-toggle="modal" data-target="#myModal">
+
+			<!--<li class="option" ng-click="actionCreate()"><a href="#" class="text-success" data-toggle="modal" data-target="#myModal">
               <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                 {{createLabel}}</a></li>
+                 {{createLabel}}</a></li>-->
+           <li class="logout">
+         		<a href=""  ng-click="logout()">Logout</a>
+           	</li>
           </ul>
         </div><!-- /.navbar-collapse -->
 

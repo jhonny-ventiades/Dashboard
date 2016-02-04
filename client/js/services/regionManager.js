@@ -6,7 +6,7 @@
  */
 
 angular.module('dashboardApp')
-    .factory('regionManager', function ($q,$window,actualUserAndroid,createAssessorAndroid) {
+    .factory('regionManager', function ($q,$window) {
         return {
          get: function(){
             var RegionalManager = Parse.Object.extend("User");
@@ -46,28 +46,15 @@ angular.module('dashboardApp')
             queryObject.first({
                 success: function (data) {
                     angular.copy(data,results);
-                    if(results.id != null){
-                        results.username = data.get("username");
-                        results.email = data.get("email");
-                        results.role = data.get("designation");
-                        results.region = data.get("region");
-                        results.phone = data.get("phone");
-                        results.address = data.get("address");
-                        results.company_name = data.get("company_name");
-                        results.uncrypt_password = data.get("uncrypt_password");
-                        deferred.resolve(results);
-                    }
-                    else{
-                        actualUserAndroid.get({"id":id})
-                        .$promise
-                        .then(function(data){
-                            angular.copy(data,results);
-                            deferred.resolve(results);
-                        })
-                        .catch(function(error){
-                            deferred.reject(error);
-                        })
-                    }
+                    results.username = data.get("username");
+                    results.email = data.get("email");
+                    results.role = data.get("designation");
+                    results.region = data.get("region");
+                    results.phone = data.get("phone");
+                    results.address = data.get("address");
+                    results.company_name = data.get("company_name");
+                    results.uncrypt_password = data.get("uncrypt_password");
+                    deferred.resolve(results);
                 },
                 error: function (error) {
                     deferred.reject(error);
@@ -77,8 +64,7 @@ angular.module('dashboardApp')
         },
 
         post: function(manager){
-            var User = Parse.Object.extend("_User");
-            var user = new User();
+            var user = new Parse.User();
             var deferred = $q.defer();
 
             user.set("username", manager.username);
@@ -93,19 +79,10 @@ angular.module('dashboardApp')
             user.set("company_name", manager.company_name);
             user.set("visible", true);
             user.set("uncrypt_password", manager.password);
-            user.save(null, {
+            user.signUp(null, {
               success: function(user) {
-                createAssessorAndroid.post(manager)//rewriting the method
-                .$promise
-                .then(function(data){
-                    console.log(data);
-                    deferred.resolve(user);
-                })
-                .catch(function(error){
-                    console.log(error);
-                });
                 // Execute any logic that should take place after the object is saved.
-                //deferred.resolve(user);
+                deferred.resolve(user);
               },
               error: function(user, error) {
                 // Execute any logic that should take place if the save fails.
@@ -223,7 +200,5 @@ angular.module('dashboardApp')
             return deferred.promise;
         },
     }
-
-
 
 });

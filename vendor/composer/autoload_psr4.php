@@ -6,5 +6,4 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'Parse\\' => array($vendorDir . '/parse/php-sdk/src/Parse'),
 );

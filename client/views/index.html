@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
         
-    <base href="/projects/Dashboard/">
+   <base href="/projects/Dashboard/">
     <!--<base href="/">-->
 
     <link rel="stylesheet" type="text/css" href="client/bower_components/bootstrap/dist/css/bootstrap.css" />    
@@ -17,6 +17,7 @@
     <script src="client/bower_components/angular-route/angular-route.min.js"></script>
     <script src="client/bower_components/angular-resource/angular-resource.min.js"></script>
     <script src="client/bower_components/parse/parse.min.js"></script>
+    <script src="client/bower_components/Chart.js/Chart.min.js"></script>
     <script src="client/js/app.js"></script>
     <script src="client/js/controllers/mainCtrl.js"></script>
     <script src="client/js/controllers/signInCtrl.js"></script>
@@ -24,14 +25,14 @@
     <script src="client/js/controllers/usersCtrl.js"></script>
     <script src="client/js/controllers/reportCtrl.js"></script>
     <script src="client/js/services/signIn.js"></script>
-    <script src="client/js/services/signInAndroid.js"></script>
     <script src="client/js/services/regionManager.js"></script>
     <script src="client/js/services/assessor.js"></script>
-    <script src="client/js/services/assessorAndroid.js"></script>
     <script src="client/js/services/session.js"></script>
     <title>Dashboard</title>
 </head>
-<body ng-controller="mainCtrl" ng-init="getActualUser()">
-    <div ng-view=""></div>    
+<body ng-controller="mainCtrl" ng-init="getActualUser()" style="height:100%">
+   	<div></div>
+    	<div ng-view=""></div>
+    	<div ng-include="'client/views/partials/footer.html'"></div>
 </body>
 </html>

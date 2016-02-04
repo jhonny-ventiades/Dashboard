@@ -22,7 +22,7 @@ angular.module('dashboardApp')
                 $window.sessionStorage.token = data.sessionToken;
                 $scope.getActualUser();
             })
-            .catch(function(error){ console.log(error);
+            .catch(function(error){
                 $scope.errorSignIn = true;// show error message
             });
         }

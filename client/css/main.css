@@ -1,15 +1,174 @@
-.black{color:  #000000}
-.white{color: #ffffff}
-.red-background{background-color: red}
-.yellow-background{background-color: #ffff00}
-.orange-background{background-color: orange}
-.significant{background-color: rgba(255, 163, 0, 0.40)}
-.green-background{background-color: green}
-.black-background{background-color:  #000000}
-.white-background{background-color: #ffffff}
+.black {
+  color: #000000; }
 
-.paper{
-    border: 1px #e4e4e4 solid;
-    padding: 10px 10px 10px 10px;
-    box-shadow: 2px 2px 2px #999;
-}
+.white {
+  color: #ffffff; }
+
+.red-background {
+  background-color: red; }
+
+.yellow-background {
+  background-color: #ffff00; }
+
+.orange-background {
+  background-color: orange; }
+
+.significant {
+  background-color: rgba(255, 163, 0, 0.4); }
+
+.green-background {
+  background-color: green; }
+
+.black-background {
+  background-color: #000000; }
+
+.white-background {
+  background-color: #ffffff; }
+
+/**********COLORS*************/
+body {
+  background-color: #263238;
+  font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif; }
+
+.principal_title {
+  color: #CDDC39; }
+
+.title {
+  padding-top: 30px;
+  padding-bottom: 50px; }
+  .title h1 {
+    color: white; }
+
+.circles-main {
+  background-color: blue_gray_900;
+  padding: 20px;
+  border: solid 5px #263238;
+  transition-property: padding background;
+  transition-duration: 0.5s, 0.5s, 0.5s;
+  transition-timing-function: ease, ease-out;
+  transition-delay: 0s ,0.5s, 1.5s; }
+  .circles-main:hover {
+    background-color: #fff;
+    padding: 10px;
+    transition-property: padding background;
+    transition-duration: 0.5s, 0.5s, 0.5s;
+    transition-timing-function: linear, linear;
+    transition-delay: 0s ,0.5s, 0.5s; }
+  .circles-main img {
+    width: 80%;
+    height: 80%;
+    text-align: center; }
+  .circles-main img:hover {
+    width: 80%;
+    height: 80%;
+    text-align: center; }
+
+#loginLayout {
+  color: white; }
+  #loginLayout .btn-lg {
+    border-radius: 0px; }
+  #loginLayout .form-control {
+    border-radius: 0px;
+    opacity: .90;
+    background-color: #455A64;
+    border-color: #455A64 !important;
+    color: white; }
+  #loginLayout .form-group {
+    margin-bottom: 5px; }
+
+.navbar {
+  margin-bottom: 0px; }
+  .navbar .navbar-text {
+    color: white; }
+  .navbar .collapse .navbar-nav .logout a {
+    color: #e64759; }
+  .navbar .collapse .navbar-nav .logout:hover {
+    background-color: #e64759; }
+    .navbar .collapse .navbar-nav .logout:hover a {
+      color: white; }
+  .navbar .collapse .navbar-nav .option .text-success {
+    color: #CDDC39; }
+  .navbar .collapse .navbar-nav .option:hover {
+    background-color: #CDDC39; }
+    .navbar .collapse .navbar-nav .option:hover .text-success {
+      color: white; }
+
+.navbar-default {
+  border: 0px;
+  background-color: #37474F;
+  border-radius: 0px; }
+
+.footer {
+  min-height: 5px; }
+  .footer div h6 {
+    color: #90A4AE;
+    margin: 5px; }
+
+.side-menu {
+  height: 100vh !important;
+  min-height: 100vh;
+  float: left;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 70px;
+  margin-top: 50px;
+  margin-bottom: 0;
+  padding-top: 20vh;
+  background-color: #252830;
+  overflow-y: auto; }
+  .side-menu .list-group-item {
+    background-color: transparent;
+    border-color: #455A64;
+    border-left: 0px;
+    border-right: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+    color: white; }
+    .side-menu .list-group-item:hover {
+      background-color: #37474F;
+      color: white; }
+  .side-menu .list-group-item.active {
+    background-color: #263238 !important; }
+    .side-menu .list-group-item.active:hover {
+      border-color: #455A64; }
+  .side-menu .list-group-item:first-child {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0; }
+  .side-menu .list-group-item:last-child {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0; }
+
+.panel {
+  color: #ECEFF1;
+  background-color: #37474F;
+  border: 1px solid #263238; }
+  .panel .panel-heading {
+    color: #CDDC39;
+    border-color: #546E7A;
+    background-color: #455A64;
+    font-size: 18px; }
+
+.paper {
+  padding: 10px 10px 10px 10px;
+  color: #ECEFF1 !important; }
+
+.jumbotron {
+  color: #ECEFF1;
+  background-color: #37474F; }
+
+.chart-legend li span {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  margin-right: 5px;
+  color: white; }
+
+.modal-content {
+  background-color: #37474F;
+  color: #ECEFF1; }
+  .modal-content small {
+    color: white; }
+
+/*# sourceMappingURL=main.css.map */

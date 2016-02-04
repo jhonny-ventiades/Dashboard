@@ -6,7 +6,7 @@
  */
 
 angular.module('dashboardApp')
-    .factory('signIn', function ($q,signInAndroid,reportInformationAndroid) {
+    .factory('signIn', function ($q) {
         return {
          get: function(login,password){
              var deferred = $q.defer();
@@ -15,17 +15,9 @@ angular.module('dashboardApp')
                     // Do stuff after successful login.
                         deferred.resolve(user);
                   },
-                  error: function(user1, error) {
+                  error: function(user, error) {
                     // The login failed. Check error to see why.
-                       signInAndroid.get({login:login,password:password})
-                       .$promise
-                        .then(function(user){
-                           deferred.resolve(user);
-                        })
-                       .catch(function(error){
-                           deferred.reject(error);
-                       });
-
+                        deferred.reject(error);
                   }
                 });
              return deferred.promise;
@@ -97,7 +89,59 @@ angular.module('dashboardApp')
               }
             });
             return deferred.promise;
+<<<<<<< HEAD
+        },
+		countAllRegions: function(){
+            var deferred = $q.defer();
+            var query = new Parse.Query(Parse.User);
+            query.count({
+              success: function(count) {
+                // The count request succeeded. Show the count
+                deferred.resolve(count);
+              },
+              error: function(error) {
+                // The request failed
+                deferred.resolve(error);
+                  console.log(error)
+              }
+            });
+            return deferred.promise;
+        },
+		countAllManagers: function(region){
+            var deferred = $q.defer();
+            var query = new Parse.Query(Parse.User);
+            query.count({
+              success: function(count) {
+                // The count request succeeded. Show the count
+                deferred.resolve(count);
+              },
+              error: function(error) {
+                // The request failed
+                deferred.resolve(error);
+                  console.log(error)
+              }
+            });
+            return deferred.promise;
+        },
+        countAllAssessors: function(region){
+            var deferred = $q.defer();
+            var query = new Parse.Query(Parse.User);
+            query.count({
+              success: function(count) {
+                // The count request succeeded. Show the count
+                deferred.resolve(count);
+              },
+              error: function(error) {
+                // The request failed
+                deferred.resolve(error);
+                  console.log(error)
+              }
+            });
+            return deferred.promise;
+        },
+=======
         }
 
+>>>>>>> origin/analitycs
     }
 });
